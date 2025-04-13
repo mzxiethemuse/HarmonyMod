@@ -1,0 +1,220 @@
+# This file will automatically update with entries for new content after a build and reload.
+
+Items: {
+	debug: {
+		DisplayName: debug
+		Tooltip:
+			'''
+			Template of an item
+			Replacing this tooltip is duty 
+			It's snowing on Mt.Fuji
+			'''
+	}
+
+	GunGrip: {
+		DisplayName: Gun Grip
+		Tooltip: Reduces recoil amount by 10%
+	}
+
+	HellHandle: {
+		DisplayName: Hell Handle
+		Tooltip:
+			'''
+			Reduces recoil amount by 15%
+			Reduces recoil duration by 20%
+			Bullets inflict fire
+			"It's kind of like a handwarmer"
+			'''
+	}
+
+	CthulhuEyeAttachment: {
+		DisplayName: Extraocular Nerve
+		Tooltip: Increases accuracy while moving quickly
+	}
+
+	ExtendedMag: {
+		DisplayName: Extended Mag
+		Tooltip: Grants a 20% chance to not consume ammo
+	}
+
+	GunGecko: {
+		DisplayName: Chameleon Charm
+		Tooltip: Increases ranged damage when using special ammo types
+	}
+
+	StabilizerGrip: {
+		DisplayName: Stabilizer Grip
+		Tooltip: Decreases horizontal recoil
+	}
+
+	Gimbal: {
+		DisplayName: Gimbal
+		Tooltip:
+			'''
+			Decreases horizontal recoil
+			Increases accuracy while moving quickly
+			Reduces recoil amount and power by 10%
+			'''
+	}
+
+	ChameleonFireCharm: {
+		DisplayName: Hellfire Camo Wrap
+		Tooltip:
+			'''
+			Greatly increases ranged damage, reduces recoil, and grants flaming bullets when using special ammo types
+			"Highly treasured amongst terrorists and counter-terrorists alike"
+			'''
+	}
+
+	CompoundEye: {
+		DisplayName: Ommatidia
+		Tooltip: Greatly increases accuracy while moving quickly
+	}
+
+	SuperLaserSight: {
+		DisplayName: Retinazor Stability Module
+		Tooltip: Greatly increases accuracy while moving quickly
+	}
+
+	BaseballGlove: {
+		DisplayName: Baseball Glove
+		Tooltip:
+			'''
+			Increases throwing speed by 20%
+
+			'''
+	}
+
+	WaveTrident: {
+		DisplayName: Wave Trident
+		Tooltip: ""
+	}
+
+	ObsidianCaltrops: {
+		DisplayName: Obsidian Caltrops
+		Tooltip:
+			'''
+			Tosses 3 caltrops that linger on the ground and pierce through armor
+			Aiming further from yourself will increase the spread
+			'''
+	}
+
+	SynergyGuide1: {
+		DisplayName: Beginner's Guide to Parrying
+		Tooltip:
+			'''
+			Press the parry keybind to parry
+			Most projectiles can be parried
+			Some projectiles have special behavior when parried
+			Performing a parry shortly before taking damage will minimize the damage taken
+			'The best offense is a good defense, and the best defense is a good parry' -Sun Tzerraria
+			'''
+	}
+
+	KnarledWood: {
+		DisplayName: Knarled Wood
+		Tooltip: "'Maliciously flammable'"
+	}
+
+	ShadowflameStaff: {
+		DisplayName: Shadowflame Staff
+		Tooltip: Fires a ball of chaos that can phase through thin walls
+	}
+
+	SacrificialDagger: {
+		DisplayName: Sacrificial Dagger
+		Tooltip:
+			'''
+			Struck enemies will have their debuffs [c/b83d3d:excised], dealing burst damage and performing a parry
+			Some debuffs have special effects when [c/b83d3d:excised]
+			'''
+	}
+
+	KnarledSaber: {
+		DisplayName: Knarled Saber
+		Tooltip: "      Inflicts shadowflame     "
+	}
+
+	YurgWhip: {
+		DisplayName: Yurg
+		Tooltip:
+			'''
+			A set of spiky balls haphazardly tied together with rope
+			Spiky balls will occasionally fall off
+			'''
+	}
+
+	Crudlock: {
+		DisplayName: Crudlock
+		Tooltip:
+			'''
+			Critical hits cause the gun to explode and increase crit chance on subsequent hits
+			'The finest in goblin firearm technology'
+			'''
+	}
+
+	GoblinSuicideStaff: {
+		DisplayName: Bomblin Staff
+		Tooltip:
+			'''
+			Summons a jetpack-wielding goblin bomber
+			Bombers can be whipped to be revived after detonating
+			'''
+	}
+
+	StellarGut: {
+		DisplayName: Stellar Gut
+		Tooltip: Digests small chip damage into mana
+	}
+
+	KnarledWoodHelmet: {
+		DisplayName: Knarled Wood Helmet
+		Tooltip: "{0}% increased summon damage"
+		SetBonus: Mods.HarmonyMod.Items.KnarledWoodHelmet.SetBonus
+	}
+
+	KnarledWoodChestplate: {
+		DisplayName: Knarled Wood Chestplate
+		Tooltip:
+			'''
+			     {0}% increased summon damage
+			     
+			'''
+	}
+
+	KnarledWoodLegs: {
+		DisplayName: Knarled Wood Legs
+		Tooltip:
+			'''
+			     {0}% increased summon damage
+			     
+			'''
+	}
+}
+
+Projectiles: {
+	WaveTridentProj.DisplayName: Old Ass Weapon
+	Explosion.DisplayName: Explosion
+	ObsidianCaltropProjectile.DisplayName: Obsidian Caltrop
+	ParryExplosion.DisplayName: Parry Explosion
+	ShadowflameBolt.DisplayName: Shadowflame Bolt
+	SacrificialDaggerProjectile.DisplayName: Sacrificial Dagger
+	MagicExplosion.DisplayName: Magic Explosion
+	Hitbox.DisplayName: an attack
+	KnarledSaberSwing.DisplayName: Knarled Saber Swing
+	debugwhipproj.DisplayName: debugwhipproj
+	YurgWhipProjectile.DisplayName: Yurg Whip Projectile
+	CrudlockProjectile.DisplayName: Crudlock Projectile
+	GoblinSuicideMinion.DisplayName: Goblin Suicide Minion
+}
+
+Keybinds.Parry.DisplayName: Parry
+
+NPCs: {
+	GoblinEngineer.DisplayName: Goblin Engineer
+	GoblinSuicideBomber.DisplayName: Goblin Martyr
+	Palisade.DisplayName: Goblin-Manufactured Palisade
+	GoblinChampion.DisplayName: Goblin Brawler
+	GoblinMedic.DisplayName: Goblin Field Medic
+	GoblinBrawler.DisplayName: Goblin Brawler
+}

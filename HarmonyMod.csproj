@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- Import tModLoader mod properties -->
+	<Import Project="..\tModLoader.targets" />
+
+	<!-- General -->
+	<PropertyGroup>
+		
+	</PropertyGroup>
+	<ItemGroup>
+	  <AdditionalFiles Remove="Content\NewFolder\**" />
+	  <Compile Remove="Content\NewFolder\**" />
+	  <EmbeddedResource Remove="Content\NewFolder\**" />
+	  <None Remove="Content\NewFolder\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Content\Dust\BulletCasing.png" />
+	  <None Remove="Content\Dust\MuzzleFlash.png" />
+	  <None Remove="Content\ExampleItem.png" />
+	  <None Remove="Content\Items\Accessories\Ranger\ExtendedMag.png" />
+	  <None Remove="Content\Items\Accessories\Ranger\GunGrip.png" />
+	  <None Remove="Content\Items\Accessories\Ranger\HellHandle.png" />
+	  <None Remove="content\rangerrework\ideas.txt" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<FxcCompilerPath>./Assets/Effects/Compiler/fxc.exe</FxcCompilerPath>
+	</PropertyGroup>
+	<ItemGroup>
+		<EffectFiles Include="**/*.fx" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Content\Clusters\Dawncloud\" />
+	</ItemGroup>
+
+	<Target Name="BuildEffects" BeforeTargets="BuildMod" Condition="$([MSBuild]::IsOSPlatform('Windows'))" Inputs="@(EffectFiles->'%(RecursiveDir)%(FileName)%(Extension)')" Outputs="@(EffectFiles->'%(RecursiveDir)%(FileName).fxc')">
+		<!-- echo is here so it tells which file is being compiled -->
+		<Exec Command="@(EffectFiles->'echo &quot;-----Compiling effect %(RecursiveDir)%(FileName)%(Extension)-----&quot; &amp;&amp; &quot;$(FxcCompilerPath)&quot; &quot;%(RecursiveDir)%(FileName)%(Extension)&quot; /T fx_2_0 /nologo /Fo &quot;%(RecursiveDir)%(FileName).fxc&quot; &#xA;&#xD;')" IgnoreExitCode="true" />
+	</Target>
+
+	<!-- References -->
+
+</Project>

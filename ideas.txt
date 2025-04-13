@@ -1,0 +1,27 @@
+matrix
+
+* W / S / M / R
+W x           +
+-
+S     x       +
+-
+M         x
+-
+R +   +       x
+
+
+RANGER + SUMMONER
+turrets, sentries that affect bullets, traps
+
+i.e. Bell sentry that rings when shot, dealing AoE damage
+
+
+RANGER + WARRIOR
+throwing :D
+
+SUMMONER + WARRIOR
+flags, buff sentries
+
+WARRIOR + MAGE
+emphasis on flasks, status effects, "enchanting" weapons
+

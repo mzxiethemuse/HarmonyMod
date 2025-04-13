@@ -1,0 +1,6 @@
+The Harmony Mod is a content mod with three purposes:
+ - Providing synergy between combat styles, allowing for more viable multiclassing and teamwork
+ - Adding new ways to play each class
+ - Bringing life to less explored parts of Terraria's content.
+
+first release should include Goblin content, Sky content, Granite/Marble content, some Snow BIome content, some mushroom content, at least 2-3 bosses
