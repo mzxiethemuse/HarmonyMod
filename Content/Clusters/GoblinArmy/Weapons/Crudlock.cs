@@ -66,7 +66,7 @@ public class CrudlockProjectile : ModProjectile
     
     public override bool PreDraw(ref Color lightColor)
     {
-        Trails.DrawTrail(Projectile.oldPos, Projectile.oldRot, Projectile.Size, Trails.BasicColorLerp(Color.Red * 0.3f, Color.Transparent), Trails.BasicWidthLerp(1f, 12f), -2.8f, 1.7f, "LightDisc");
+        Trails.DrawTrail(Projectile.oldPos, Projectile.oldRot, Projectile.Size, Trails.BasicColorLerp(Color.BlueViolet * 0.4f, Color.Transparent), Trails.BasicWidthLerp(1f, 12f), -2.8f, 1.7f, "LightDisc");
 
         return true;
     }
@@ -82,10 +82,10 @@ public class CrudlockProjectile : ModProjectile
             SoundEngine.PlaySound(SoundID.Item41.WithPitchOffset(0.6f));
             for (int i = 0; i < 18; i++)
             {
-                Terraria.Dust.NewDust(target.position, target.width, target.height, DustID.Torch);
-                Terraria.Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
+                Terraria.Dust.NewDust(target.position, target.width, target.height, DustID.DemonTorch);
+                Terraria.Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.DemonTorch);
 
-                Terraria.Dust.NewDust(target.position, target.width, target.height, DustID.Flare);
+                Terraria.Dust.NewDust(target.position, target.width, target.height, DustID.Shadowflame);
                 if (i % 4 == 0)
                 {
                     var p = Projectile.NewProjectileDirect(target.GetSource_OnHurt(null), Projectile.Center,
@@ -95,7 +95,7 @@ public class CrudlockProjectile : ModProjectile
 
                 }
             }
-            Burst.SpawnBurst("Explosion", Projectile.Center, Color.OrangeRed * 0.7f, 50f, 38);
+            Burst.SpawnBurst("Explosion", Projectile.Center, Color.BlueViolet * 0.7f, 50f, 38);
             Projectile.CritChance += 5;
         }
     }

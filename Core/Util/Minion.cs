@@ -51,11 +51,11 @@ public abstract class Minion : ModProjectile
         return DealContactDamage;
     }
 
-    public override bool PreAI()
+    public override void AI()
     {
         if (ShouldPerformTargetingLogic()) {
             Timer++;
-            if (Owner.dead || !Owner.active) return true;
+            if (Owner.dead || !Owner.active) return;
             Projectile.timeLeft = 2;
             if (Owner.HasMinionAttackTargetNPC)
             {
@@ -77,8 +77,6 @@ public abstract class Minion : ModProjectile
                 }
             }
         }
-        
-        return true;
     }
 
     public virtual void AttackNPC()

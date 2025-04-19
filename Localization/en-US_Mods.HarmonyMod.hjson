@@ -190,6 +190,21 @@ Items: {
 			     
 			'''
 	}
+
+	Starglob: {
+		DisplayName: Starglob
+		Tooltip: ""
+	}
+
+	FusionBezoar: {
+		DisplayName: Fusion Bezoar
+		Tooltip: Siphons mana into healing when below 100 health
+	}
+
+	TransmutationEssence: {
+		DisplayName: Mutable Concentrate
+		Tooltip: The essence of transmutation magic
+	}
 }
 
 Projectiles: {
@@ -206,6 +221,7 @@ Projectiles: {
 	YurgWhipProjectile.DisplayName: Yurg Whip Projectile
 	CrudlockProjectile.DisplayName: Crudlock Projectile
 	GoblinSuicideMinion.DisplayName: Goblin Suicide Minion
+	StarBurst.DisplayName: Star Burst
 }
 
 Keybinds.Parry.DisplayName: Parry
@@ -217,4 +233,6 @@ NPCs: {
 	GoblinChampion.DisplayName: Goblin Brawler
 	GoblinMedic.DisplayName: Goblin Field Medic
 	GoblinBrawler.DisplayName: Goblin Brawler
+	StellarToad.DisplayName: Stellar Toad
+	MidnightFly.DisplayName: Midnight Fly
 }

@@ -80,16 +80,6 @@ public static class Trails
 
         return positions;
     }
-    
-    private static float[] divideEachInArrayUtil(float[] positions, int denominator)
-    {
-        for (int i = 0; i < positions.Length; i++)
-        {
-            positions[i] = positions[i] / denominator;
-        }
-
-        return positions;
-    }
 
     public static VertexStrip.StripColorFunction BasicColorLerp(Color a, Color b)
     {

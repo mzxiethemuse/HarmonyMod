@@ -102,8 +102,12 @@ public abstract class ComplexNPC : ModNPC
         }
     }
 
+
     public void Decelerate() => NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, 0,
         Acceleration);
+    
+    public void Decelerate(float delta) => NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, 0,
+        delta);
 
     public float DistanceOnX(Vector2 a, Vector2 b)
     {

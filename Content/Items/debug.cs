@@ -1,3 +1,4 @@
+using HarmonyMod.Content.Clusters.MidnightSwamp;
 using HarmonyMod.Content.Dust;
 using HarmonyMod.Content.Projectiles;
 using HarmonyMod.Core.Util;
@@ -39,8 +40,8 @@ namespace HarmonyMod.Content.Items
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
 			// Item.DefaultToWhip(ModContent.ProjectileType<debugwhipproj>(), 20, 2, 6);
-			// Item.shoot = ModContent.ProjectileType<debugwhipproj>();
-			// Item.shootSpeed = 12f;
+			Item.shoot = ProjectileID.Arkhalis;
+			Item.shootSpeed = 12f;
 
 		}
 
@@ -55,10 +56,8 @@ namespace HarmonyMod.Content.Items
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type,
 			int damage, float knockback)
 		{
-			// buildSmoke.Emit(Main.MouseWorld, 1, 1, 10);
-			// Explosion.SpawnExplosion<Explosion>(Main.MouseWorld, 0, 0f, player.whoAmI, 22f, 17, Color.MediumPurple, 30);
-
-			return base.Shoot(player, source, position, velocity, type, damage, knockback);
+			new SwampGen("penis", 100).Apply();
+			return false;
 		}
 	}
 }

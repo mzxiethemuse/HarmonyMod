@@ -37,7 +37,6 @@ namespace HarmonyMod.Core
 		// We use PostWorldGen for this because we want to ensure that all chests have been placed before adding items.
 		public override void PostWorldGen() {
 			AddItemsToChests([ModContent.ItemType<GunGecko>()], ChestType.JungleShrine, 6, 3);
-			AddItemsToChests([ModContent.ItemType<WaveTrident>()], ChestType.Ocean, 3, 2);
 
 		}
 

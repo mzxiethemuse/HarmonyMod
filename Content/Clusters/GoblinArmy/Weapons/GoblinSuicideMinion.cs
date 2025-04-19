@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using HarmonyMod.Assets;
 using HarmonyMod.Content.Clusters.GoblinArmy.NPCs;
 using HarmonyMod.Content.Dust;
@@ -6,11 +7,14 @@ using HarmonyMod.Content.Projectiles;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace HarmonyMod.Content.Clusters.GoblinArmy.Weapons;
 
@@ -44,20 +48,33 @@ public class GoblinSuicideStaff : ModItem
 
 public class GoblinSuicideMinion : Minion
 {
-    public override string Texture => AssetDirectory.Placeholders + "GenericItem";
+    // public override string Texture => AssetDirectory.Placeholders + "GenericItem";
+    public static Asset<Texture2D> texture = ModContent.Request<Texture2D>(AssetDirectory.GoblinArmy + "Weapons/GoblinSuicideMinion", AssetRequestMode.ImmediateLoad);
     protected override bool DealContactDamage => true;
+    public override void SetStaticDefaults()
+    {
+        ProjectileID.Sets.TrailingMode[Projectile.type] = 3;
+        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 18;
+    }
     public override void SetDefaults()
     {
-        Projectile.width = 26;
-        Projectile.height = 26;
+        Projectile.width = 28;
+        Projectile.height = 34;
         
         base.SetDefaults();
         State = 1;
     }
-    
-    
+
+    public override bool PreAI()
+    {
+        if (State != 1) Projectile.spriteDirection = Owner.direction;
+        Projectile.rotation = MathHelper.Lerp(Projectile.rotation, Projectile.velocity.X * 0.05f, 0.5f);
+        return true;
+    }
+
     public override void AttackNPC()
     {
+        Projectile.spriteDirection = Projectile.velocity.X > 0 ? -1 : 1;
         switch (State)
         {
             case 0:
@@ -67,7 +84,6 @@ public class GoblinSuicideMinion : Minion
             case 1:
             {
                 Decelerate(0.2f);
-                Projectile.position.Y += MathF.Sin((float)Main.timeForVisualEffects) / 4;
                 if (Timer > 600)
                 {
                     Timer = 0;
@@ -87,7 +103,7 @@ public class GoblinSuicideMinion : Minion
                 break;
             }
         }
-        
+
     }
 
     public override void IdleUpdate()
@@ -95,7 +111,7 @@ public class GoblinSuicideMinion : Minion
         if (State == 1)
         {
             Decelerate(0.2f);
-            Projectile.position.Y += MathF.Sin((float)Main.timeForVisualEffects) * 0.2f;
+            // Projectile.position.Y += MathF.Sin((float)Main.timeForVisualEffects) * 0.2f;
             if (Timer > 600)
             {
                 Timer = 0;
@@ -110,10 +126,7 @@ public class GoblinSuicideMinion : Minion
 
     public override Vector2 GetIdlePosition()
     {
-
-        var offset = (new Vector2(-70, -30).RotatedBy(0.6 * Projectile.minionPos));
-        offset.X *= Owner.direction;
-        return Owner.Center + offset;
+        return Projectile.IdlePositionCircle(Owner);
     }
 
     public override void OnWhipped(Projectile whip)
@@ -161,6 +174,31 @@ public class GoblinSuicideMinion : Minion
             State = 1;
         }
         base.OnHitNPC(target, hit, damageDone);
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        Trails.DrawTrail(Projectile.oldPos, Projectile.oldRot, Projectile.Size, Trails.BasicColorLerp(Color.Indigo * 0.4f, Color.Transparent), Trails.BasicWidthLerp(1f, 12f), -2.8f, 1f, "LightDisc");
+
+        Vector2 offset = new Vector2(0, MathF.Sin((float)Main.timeForVisualEffects / 8) * 5f);
+        var isDead = ((State == 1) ? 1 : 0);
+        if (isDead == 0)
+        {
+            if (Main.rand.NextBool(3))
+            {
+                var dust = Terraria.Dust.NewDustPerfect(Projectile.Center + new Vector2(11 * -Projectile.spriteDirection, 10) + offset, DustID.Shadowflame, null, 220, default, 0.77f);
+                dust.velocity *= 0.3f;
+                dust.velocity.Y = 1.45f;
+            }
+        }
+        else
+        {
+            if (Main.rand.NextBool(4)) Terraria.Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Shadowflame, 0, 0, 245);
+        }
+        Rectangle frame = new Rectangle(0, Projectile.height * isDead, Projectile.width, Projectile.height);
+        SpriteEffects effects = (Projectile.spriteDirection == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+        Main.spriteBatch.Draw(texture.Value, Projectile.position - Main.screenPosition + offset + Projectile.Size / 2, frame, lightColor * ((State == 1) ? 0.7f : 1f), Projectile.rotation, Projectile.Size / 2, Vector2.One, effects, 0f);
+        return false;
     }
 
     public override Color? GetAlpha(Color lightColor)

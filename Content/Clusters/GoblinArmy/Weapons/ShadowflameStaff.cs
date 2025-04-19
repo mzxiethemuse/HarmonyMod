@@ -14,7 +14,7 @@ namespace HarmonyMod.Content.Clusters.GoblinArmy.Weapons;
 
 public class ShadowflameStaff : ModItem
 {
-    public override string Texture => AssetDirectory.Placeholders + "GenericItem";
+    // public override string Texture => AssetDirectory.Placeholders + "GenericItem";
 
     public override void SetStaticDefaults()
     {
@@ -23,9 +23,12 @@ public class ShadowflameStaff : ModItem
 
     public override void SetDefaults()
     {
+        Item.width = 48;
+        Item.height = 52;
         Item.mana = 11;
         Item.useTime = 25;
         Item.useAnimation = 25;
+        // Item.holdStyle = ItemHoldStyleID.HoldHeavy;
         Item.useStyle = ItemUseStyleID.Shoot;
 
         Item.shoot = ModContent.ProjectileType<ShadowflameBolt>();
@@ -37,6 +40,15 @@ public class ShadowflameStaff : ModItem
         
         Item.UseSound = SoundID.Item8.WithPitchOffset(1.2f);
     }
+    
+        // public override void HoldStyle(Player player, Rectangle heldItemFrame)
+        // {
+        //     if (player.whoAmI == Main.myPlayer)
+        //     {
+        //         player.itemLocation = Vector2.Zero;
+        //         player.itemRotation = player.Center.DirectionTo(Main.MouseWorld).ToRotation();
+        //     }
+        // }
 
     public override void AddRecipes()
     {

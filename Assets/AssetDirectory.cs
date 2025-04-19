@@ -33,6 +33,9 @@ public class AssetDirectory : ModSystem
     public static string Glow = Assets + "Glow/";
     public static string Placeholders = Assets + "Placeholder/";
 
+    public static string Content = "HarmonyMod/Content/";
+    public static string GoblinArmy = Content + "Clusters/GoblinArmy/";
+
     public static string[] shaders =
     {
         "Basic",

@@ -1,12 +1,11 @@
 using HarmonyMod.Assets;
-using HarmonyMod.Content.Clusters.MidnightSwamp.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace HarmonyMod.Content.Clusters.MidnightSwamp.Accessories;
 
-public class StellarGut : ModItem
+public class FusionBezoar : ModItem
 {
     public override string Texture => AssetDirectory.Placeholders + "GenericItem";
 
@@ -22,14 +21,7 @@ public class StellarGut : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.GetModPlayer<MidnightSwampPlayer>().StellarGut = true;
+        player.GetModPlayer<MidnightSwampPlayer>().Bezoar = true;
     }
-
-    public override void AddRecipes()
-    {
-        Recipe recipe = CreateRecipe();
-        recipe.AddIngredient<Starglob>(8);
-        recipe.AddTile(TileID.Bottles);
-        recipe.Register();
-    }
+    
 }

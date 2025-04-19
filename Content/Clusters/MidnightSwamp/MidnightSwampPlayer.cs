@@ -10,9 +10,11 @@ namespace HarmonyMod.Content.Clusters.MidnightSwamp;
 public class MidnightSwampPlayer : ModPlayer
 {
     public bool StellarGut = false;
+    public bool Bezoar = false;
 
     public override void ResetEffects()
     {
+        Bezoar = false;
         StellarGut = false;
     }
 
@@ -20,7 +22,7 @@ public class MidnightSwampPlayer : ModPlayer
     {
         modifiers.ModifyHurtInfo += (ref Player.HurtInfo info) =>
         {
-            if (StellarGut && info.Damage < 10 && !Player.immune)
+            if (StellarGut && info.Damage < 5 && !Player.immune)
             {
                 DustEmitter.Emit(DustID.ManaRegeneration, Player.position, Player.width, Player.height, 10);
                 SoundEngine.PlaySound(SoundID.NPCDeath13.WithPitchOffset(1.5f), Player.Center);
@@ -31,10 +33,28 @@ public class MidnightSwampPlayer : ModPlayer
                 Player.immune = true;
                 Player.AddImmuneTime(ImmunityCooldownID.General, 60);
                 Player.UpdateImmunity();
-                Player.ManaEffect((int)MathF.Max(info.Damage, 5));
+                var manaAmt = (int)MathF.Max(info.Damage, 5);
+                Player.ManaEffect(manaAmt);
+                Player.statMana = (int)MathF.Min(Player.statManaMax2, Player.statMana + manaAmt);
+                
             }
         };
         
     }
-    
+
+    public override void UpdateEquips()
+    {
+        if (Player.statLife < 100)
+        {
+            if (Player.CheckMana(3))
+            {
+                Terraria.Dust.NewDust(Player.position, Player.width, Player.height, DustID.ManaRegeneration);
+                Player.statMana -= 3;
+                if (Player.statLife + 1 < Player.statLifeMax2)
+                {
+                    Player.statLife += 1;
+                }
+            }
+        }
+    }
 }
