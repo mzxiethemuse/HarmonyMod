@@ -44,7 +44,7 @@ public class MidnightSwampPlayer : ModPlayer
 
     public override void UpdateEquips()
     {
-        if (Player.statLife < 100)
+        if (Bezoar && Player.statLife < 100)
         {
             if (Player.CheckMana(3))
             {
@@ -57,4 +57,6 @@ public class MidnightSwampPlayer : ModPlayer
             }
         }
     }
+    
+    
 }

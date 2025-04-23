@@ -29,9 +29,6 @@
 	<ItemGroup>
 		<EffectFiles Include="**/*.fx" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Content\Clusters\Dawncloud\" />
-	</ItemGroup>
 
 	<Target Name="BuildEffects" BeforeTargets="BuildMod" Condition="$([MSBuild]::IsOSPlatform('Windows'))" Inputs="@(EffectFiles->'%(RecursiveDir)%(FileName)%(Extension)')" Outputs="@(EffectFiles->'%(RecursiveDir)%(FileName).fxc')">
 		<!-- echo is here so it tells which file is being compiled -->

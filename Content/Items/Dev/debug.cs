@@ -1,29 +1,18 @@
 using HarmonyMod.Content.Clusters.MidnightSwamp;
-using HarmonyMod.Content.Dust;
-using HarmonyMod.Content.Projectiles;
-using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace HarmonyMod.Content.Items
+namespace HarmonyMod.Content.Items.Dev
 { 
 	// This is a basic item template.
 	// Please see tModLoader's ExampleMod for every other example:
 	// https://github.com/tModLoader/tModLoader/tree/stable/ExampleMod
 	public class debug : ModItem
 	{
-		static DustEmitter buildSmoke = new DustEmitter(ModContent.DustType<FancySmoke>());
-    
 		
-		public override void SetStaticDefaults()
-		{
-			buildSmoke.SetScaleRange(0.8f, 3f);
-			buildSmoke.SetVelocitySpread(new Vector2(5, 2));
-			base.SetStaticDefaults();
-		}
 		// The Display Name and Tooltip of this item can be edited in the 'Localization/en-US_Mods.HarmonyMod.hjson' file.
 		public override void SetDefaults()
 		{
@@ -40,8 +29,6 @@ namespace HarmonyMod.Content.Items
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
 			// Item.DefaultToWhip(ModContent.ProjectileType<debugwhipproj>(), 20, 2, 6);
-			Item.shoot = ProjectileID.Arkhalis;
-			Item.shootSpeed = 12f;
 
 		}
 
@@ -53,11 +40,11 @@ namespace HarmonyMod.Content.Items
 			recipe.Register();
 		}
 
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type,
-			int damage, float knockback)
+		public override bool? UseItem(Player player)
 		{
-			new SwampGen("penis", 100).Apply();
-			return false;
+			Point mouseWorld = new Point((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16));
+			SwampGen.GenerateMidnightSwampAt(mouseWorld);
+			return true;
 		}
 	}
 }

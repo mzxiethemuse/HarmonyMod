@@ -205,6 +205,11 @@ Items: {
 		DisplayName: Mutable Concentrate
 		Tooltip: The essence of transmutation magic
 	}
+
+	StarMudItem: {
+		DisplayName: Star Mud Item
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -236,3 +241,5 @@ NPCs: {
 	StellarToad.DisplayName: Stellar Toad
 	MidnightFly.DisplayName: Midnight Fly
 }
+
+Tiles.StarMud.MapEntry: Star Mud

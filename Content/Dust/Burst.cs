@@ -5,12 +5,14 @@ using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace HarmonyMod.Content.Dust;
 
 public class Burst : ModDust
 {
+    const bool _debug = false;
     public override string Texture => AssetDirectory.Glow + "Explosion";
     
 
@@ -70,14 +72,18 @@ public class Burst : ModDust
 
     public static void SpawnBurst(string texture, Vector2 position, Color color, float radius, int duration)
     {
-        var peepee = Terraria.Dust.NewDustPerfect(position, ModContent.DustType<Burst>(), null, 0, color with {A = 0}, 1f);
         
+        var peepee = Terraria.Dust.NewDustPerfect(position, ModContent.DustType<Burst>(), null, 0, color with {A = 0}, 1f);
+        // DEBUG
+        if (_debug) Terraria.Dust.NewDustPerfect(position, DustID.TintableDust, null, 0, color with {A = 0}, 5f);
         peepee.customData = new BurstData(texture, duration, radius);
     }
     
     public static void SpawnBurst(Vector2 position, Color color, BurstData data)
     {
         var peepee = Terraria.Dust.NewDustPerfect(position, ModContent.DustType<Burst>(), null, 0, color with {A = 0}, 1f);
+        if (_debug)  Terraria.Dust.NewDustPerfect(position, DustID.TintableDust, null, 0, color with {A = 0}, 5f);
+
         peepee.customData = data;
     }
 }

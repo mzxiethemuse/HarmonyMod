@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using HarmonyMod.Content.Dust;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
@@ -61,9 +62,11 @@ public class YurgWhipProjectile : BaseWhipProjectile
     {
         if (Projectile.ai[0] == 30f && Main.rand.NextBool(2))
         {
+            // GO MY MAGIC NUMBER
             if (Main.netMode != 2)
             {
-                Burst.SpawnBurst(Projectile.Center, Color.Gray, spikyballburst);
+                // Burst.SpawnBurst(Projectile.Center, Color.Gray, spikyballburst); 
+                DustEmitter.Emit(DustID.WhiteTorch, Projectile.Center, 0, 0, 9);
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver2) * 2,
                         ProjectileID.SpikyBall, 3, 2f, Projectile.owner);
                 

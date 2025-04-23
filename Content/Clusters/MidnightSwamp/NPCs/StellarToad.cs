@@ -27,7 +27,7 @@ public class StellarToad : ComplexNPC
     };
     
     public int StoredItem = -1;
-    
+    private bool wasJustInWater;
     
     public override void SetStaticDefaults()
     {
@@ -54,6 +54,12 @@ public class StellarToad : ComplexNPC
 
     public override void AI()
     {
+        if (NPC.Center.Distance(GetTarget().Center) > 2000f)
+        {
+            NPC.EncourageDespawn(60);
+
+        }
+
         if (Main.rand.NextBool(180))
         {
             NPC.NewNPCDirect(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(300f, 300f),
@@ -164,7 +170,22 @@ public class StellarToad : ComplexNPC
                 break;
         }
 
-        NPC.velocity.Y += 0.15f;
+        if (NPC.wet)
+        {
+            NPC.velocity.Y -= 0.12f;
+            wasJustInWater = true;
+        }
+        else
+        {
+            if (wasJustInWater)
+            {
+                NPC.velocity.Y = -0.5f;
+
+                wasJustInWater = false;
+            }
+            NPC.velocity.Y += 0.15f;
+
+        }
         NPC.direction = NPC.velocity.X > 0 ? 1 : -1;
         NPC.spriteDirection = -NPC.direction;
         base.AI();

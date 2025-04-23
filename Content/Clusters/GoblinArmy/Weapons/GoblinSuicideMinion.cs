@@ -21,7 +21,7 @@ namespace HarmonyMod.Content.Clusters.GoblinArmy.Weapons;
 
 public class GoblinSuicideStaff : ModItem
 {
-    public override string Texture => AssetDirectory.Placeholders + "GenericItem";
+    public override string Texture => AssetDirectory.GoblinArmy + "Weapons/GoblinSuicideStaff";
     public override void SetDefaults()
     {
         Item.useStyle = ItemUseStyleID.Swing;

@@ -33,7 +33,7 @@ public class MidnightFly : ComplexNPC
         if (Main.rand.NextBool(4))
         {
             NPC.velocity = Main.rand.NextVector2CircularEdge(0.2f, 0.2f);
-
+            NPC.EncourageDespawn(15);
         }
         base.AI();
     }

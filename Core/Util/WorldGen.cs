@@ -5,33 +5,6 @@ using Terraria.WorldBuilding;
 
 namespace HarmonyMod.Core.Util;
 
-public class WorldGenSystem : ModSystem
-{
-    private static List<WorldGenTask> addedtasks;
-
-    public override void Load()
-    {
-        addedtasks = new List<WorldGenTask>();
-    }
-
-    public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
-    {
-        foreach (var task in addedtasks)
-        {
-            int stepIndex = tasks.FindIndex(genpass => genpass.Name.Equals(task.PlaceToInsert));
-            if (stepIndex != -1) {
-                tasks.Insert(stepIndex + 1, task);
-            }
-        }
-
-    }
-
-    public static void AddTask(WorldGenTask task)
-    {
-        addedtasks.Add(task);
-    }
-}
-
 public abstract class WorldGenTask : GenPass {
     
     /// <summary>
@@ -51,4 +24,5 @@ public abstract class WorldGenTask : GenPass {
     {
         Apply(progress, configuration);
     }
+    
 }

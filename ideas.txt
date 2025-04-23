@@ -25,3 +25,6 @@ flags, buff sentries
 WARRIOR + MAGE
 emphasis on flasks, status effects, "enchanting" weapons
 
+
+PLAN:
+- finish midnight swamp, ruminate first major obstacle, RETVRN to combat expansions

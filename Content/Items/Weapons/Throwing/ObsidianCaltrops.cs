@@ -59,7 +59,7 @@ public class ObsidianCaltropProjectile : ModProjectile
 {
     public override void SetStaticDefaults()
     {
-        WarriorPlayer.parryActions.Add(ModContent.ProjectileType<ObsidianCaltropProjectile>(),
+        WarriorParry.parryActions.Add(ModContent.ProjectileType<ObsidianCaltropProjectile>(),
             (player, projectile) =>
             {
                 if (Main.myPlayer == player.whoAmI)
