@@ -52,7 +52,7 @@ public static class WorldHelper
             {
                 if (iDoCrystalMeth.Invoke(x))
                 {
-                    return;
+                    break;
                 }
             }
         }
@@ -92,6 +92,21 @@ public static class WorldHelper
         if (stepIndex != -1) {
             tasks.Insert(stepIndex + 1, task);
         }
-    } 
+    }
+
+    public static Point FindSurfaceTileAtX(int i, ushort type)
+    {
+        Point o = new Point(-1, -1);
+        for (int j = 60; j < Main.worldSurface; j++)
+        {
+            if (Framing.GetTileSafely(i, j).HasTile)
+            {
+                o = new Point(i, j);
+                break;
+            }
+        }
+
+        return o;
+    }
     
 }

@@ -1,3 +1,4 @@
+using HarmonyMod.Content.Clusters.Forest;
 using HarmonyMod.Content.Clusters.MidnightSwamp;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -43,7 +44,8 @@ namespace HarmonyMod.Content.Items.Dev
 		public override bool? UseItem(Player player)
 		{
 			Point mouseWorld = new Point((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16));
-			SwampGen.GenerateMidnightSwampAt(mouseWorld);
+			(new ForestGen("penis", 1)).Apply();
+			// SwampGen.GenerateMidnightSwampAt(mouseWorld);
 			return true;
 		}
 	}

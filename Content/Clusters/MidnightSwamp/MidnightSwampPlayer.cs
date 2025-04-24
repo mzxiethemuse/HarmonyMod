@@ -22,7 +22,7 @@ public class MidnightSwampPlayer : ModPlayer
     {
         modifiers.ModifyHurtInfo += (ref Player.HurtInfo info) =>
         {
-            if (StellarGut && info.Damage < 5 && !Player.immune)
+            if (StellarGut && info.Damage < 5 && !Player.immune && !info.Cancelled)
             {
                 DustEmitter.Emit(DustID.ManaRegeneration, Player.position, Player.width, Player.height, 10);
                 SoundEngine.PlaySound(SoundID.NPCDeath13.WithPitchOffset(1.5f), Player.Center);

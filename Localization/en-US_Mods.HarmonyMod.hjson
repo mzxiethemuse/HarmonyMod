@@ -210,6 +210,16 @@ Items: {
 		DisplayName: Star Mud Item
 		Tooltip: ""
 	}
+
+	RootStaff: {
+		DisplayName: Root Staff
+		Tooltip: ""
+	}
+
+	LivingHarp: {
+		DisplayName: Living Harp
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -227,6 +237,8 @@ Projectiles: {
 	CrudlockProjectile.DisplayName: Crudlock Projectile
 	GoblinSuicideMinion.DisplayName: Goblin Suicide Minion
 	StarBurst.DisplayName: Star Burst
+	LifeString.DisplayName: Life String
+	Horb.DisplayName: Horb
 }
 
 Keybinds.Parry.DisplayName: Parry
