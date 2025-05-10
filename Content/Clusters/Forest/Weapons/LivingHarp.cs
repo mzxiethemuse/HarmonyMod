@@ -1,7 +1,10 @@
 using System;
 using System.Linq;
-using HarmonyMod.Assets;
+using HarmonyMod.Asset;
 using HarmonyMod.Content.Clusters.Forest.Projectiles;
+using HarmonyMod.Content.Dust;
+using HarmonyMod.Content.Dust.BurstDatas;
+using HarmonyMod.Content.Projectiles;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
@@ -10,6 +13,8 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -61,6 +66,7 @@ public class LivingHarp : ModItem
 
 public class LifeString : ModProjectile
 {
+    
     public static Asset<Texture2D> HarpNutTexture = ModContent.Request<Texture2D>(AssetDirectory.Content + "Clusters/Forest/Weapons/HarpNut");
     public Vector2 corner => Projectile.position + Projectile.Size;
     
@@ -77,6 +83,7 @@ public class LifeString : ModProjectile
     }
 
     public override string Texture => AssetDirectory.Placeholders + "Fuck";
+    
 
     public override void SetDefaults()
     {
@@ -85,7 +92,7 @@ public class LifeString : ModProjectile
         Projectile.width = 24;
         Projectile.height = 24 * 7;
         Projectile.timeLeft = 900;
-        Projectile.friendly = true;
+        Projectile.friendly = false;
         Projectile.hostile = true;
     }
 
@@ -102,6 +109,12 @@ public class LifeString : ModProjectile
                 {
                     if (Projectile.Colliding(Projectile.Hitbox, proj.Hitbox))
                     {
+                        if (strumTime <= 0) {
+                            Hitbox.SpawnHitbox(Projectile.GetSource_Misc("I peed My Pants"), Projectile.Center, 50, 50,
+                                Projectile.damage, 20, -1, true);
+                            Burst.SpawnBurst(Vector2.Lerp(Projectile.Center,proj.Center,0.5f), Color.LimeGreen * 0.77f,
+                                new BurstData(Assets.VFXCircle, 40, 70));
+                        }
                         strumTime = 60f;
                         break;
                     }
@@ -150,64 +163,77 @@ public class LifeString : ModProjectile
     {
         Texture2D pixel = TextureAssets.FishingLine.Value;
         Rectangle placeholder = pixel.Bounds;
-        Vector2 pos1 = Projectile.position + new Vector2(offset, 0);
-        Vector2 pos2 = corner - new Vector2(offset, 0);
+        Vector2 pos1 = Projectile.position + new Vector2(offset, 0) - (new Vector2(1, 0)*  Projectile.Size / 2);
+        Vector2 pos2 = corner - new Vector2(offset, 0) - (new Vector2(1, 0)*  Projectile.Size / 2);
         Vector2 Penis = HarpNutTexture.Size();
         float alpha = MathF.Min((900 - Projectile.timeLeft) / 15f, 1);
         float alpha2 = MathF.Min(Projectile.timeLeft / 20f, 1);
         float finalAlpha = MathF.Min(alpha, alpha2);
-        
+        // //
+        // Main.spriteBatch.End();
+        // GraphicsUtils.StartDefaultSpriteBatch(Filters.Scene["HarmonyMod:SortaBlur"].GetShader().Shader);
+        // GameShaders.Misc["HarmonyMod:SortaBlur"].Apply();
+            for (int i = 0; i < 100; i++)
+            {
+                float strum = MathF.Max(0, MathF.Min(strumTime, 60));
+                float a = i / 100f;
 
 
-        for (int i = 0; i < 100; i++)
-        {
-            float strum = MathF.Max(0, MathF.Min(strumTime, 60));
-            float a = i / 100f;
-            
-            
-            var angle = pos1.DirectionTo(pos2).ToRotation();
-            var pos3 = Vector2.Lerp(pos1, pos2, a) + Penis + new Vector2(0, MathF.Sin(i * strum / 220f + (float)Main.timeForVisualEffects) * strum / 4 * LerpUtils.Window(a)).RotatedBy(angle);
-            Main.spriteBatch.Draw(pixel, 
-                (pos3 - Main.screenPosition), 
-                new Rectangle(0, 0, 6, 2),
-                 Color.Lerp(Color.LimeGreen, Color.ForestGreen, LerpUtils.RectSin(LerpUtils.PhaseShift(a, Projectile.timeLeft / 100f), 1 + strum / 90)) * 0.6f * finalAlpha,
-                angle,
-                pixel.Size() / 2, 
-                1.5f,
-                SpriteEffects.None,
-                1f);
-        }
+                var angle = pos1.DirectionTo(pos2).ToRotation();
+                var pos3 = Vector2.Lerp(pos1, pos2, a) + Penis + new Vector2(0,
+                        MathF.Sin(i * strum / 220f + (float)Main.timeForVisualEffects) * strum / 4 *
+                        LerpUtils.Window(a))
+                    .RotatedBy(angle);
+                Main.spriteBatch.Draw(pixel,
+                    (pos3 - Main.screenPosition),
+                    new Rectangle(0, 0, 6, 2),
+                    Color.Lerp(Color.LimeGreen, Color.ForestGreen,
+                        LerpUtils.RectSin(LerpUtils.VShift(a, Projectile.timeLeft / 100f), 1 + strum / 90)) * 0.6f *
+                    finalAlpha,
+                    angle,
+                    pixel.Size() / 2,
+                    1.5f,
+                    SpriteEffects.None,
+                    1f);
+            }
         
-        // stupid dumb centering shit on this bro im gonn KMS
-        Main.spriteBatch.Draw(HarpNutTexture.Value, pos1 - Main.screenPosition + new Vector2(12, 6), null, Color.White * finalAlpha);//, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-        Main.spriteBatch.Draw(HarpNutTexture.Value, pos2 - Main.screenPosition + new Vector2(12, 6), null, Color.White * finalAlpha);//, 0f, HarpNutTexture.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            // stupid dumb centering shit on this bro im gonn KMS
+            Main.spriteBatch.Draw(HarpNutTexture.Value, pos1 - Main.screenPosition + new Vector2(12, 6), null,
+                Color.White * finalAlpha); //, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(HarpNutTexture.Value, pos2 - Main.screenPosition + new Vector2(12, 6), null,
+                Color.White * finalAlpha); //, 0f, HarpNutTexture.Size() / 2f, 1f, SpriteEffects.None, 0f);
+        // Main.spriteBatch.End();
+        // GraphicsUtils.StartDefaultSpriteBatch();
         return false;
     }
 
     public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
     {
         strumTime = 120;
-        for (int i = 0; i < Main.rand.Next(3,7); i++)
-        {
-            Projectile.NewProjectile(
-                Projectile.GetSource_FromAI(),
-                Projectile.Center,
-                new Vector2(Main.rand.NextFloat(-1.5f, 1.51f), -4.5f),
-                ModContent.ProjectileType<Horb>(),
-                2,
-                0f,
-                Projectile.owner
-            );
-        }
+        // for (int i = 0; i < Main.rand.Next(3,7); i++)
+        // {
+        //     Projectile.NewProjectile(
+        //         Projectile.GetSource_FromAI(),
+        //         Projectile.Center,
+        //         new Vector2(Main.rand.NextFloat(-1.5f, 1.51f), -4.5f),
+        //         ModContent.ProjectileType<Horb>(),
+        //         2,
+        //         0f,
+        //         Projectile.owner
+        //     );
+        // }
         modifiers.Cancel();
     }
 
-    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-    {
-        strumTime = 60;
-    }
+
+
+    // public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+    // {
+    //     Hitbox.SpawnHitbox(Projectile.GetSource_OnHit(target), Projectile.Center, 50, 50, 30, 20, -1, true);
+    //     Burst.SpawnBurst(Projectile.Center, Color.LimeGreen * 0.77f, new MagicBurst("Explosion", 30, 90));
+    //     strumTime = 60;
+    // }
 
     public override bool CanHitPlayer(Player target) => strumTime <= 0;
 
-    public override bool? CanHitNPC(NPC target) => strumTime <= 0;
 }

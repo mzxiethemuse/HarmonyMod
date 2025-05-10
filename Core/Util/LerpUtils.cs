@@ -9,25 +9,53 @@ namespace HarmonyMod.Core.Util;
 /// </summary>
 public static class LerpUtils
 {
-    public static float Clip(float a, float amp)
+    // Why are these extension methods? FUck you
+    public static LerpValue Clip(this LerpValue value, float amp)
     {
-        return MathHelper.Clamp(a + amp, 0, 1);
+        return value.a + amp;
     }
     
-    public static float Formant(float a, float amp) => MathHelper.Clamp((amp * a) + ((1 - a) / 2), 0, 1);
-    
-    public static float PhaseShift(float a, float shift) => MathHelper.Clamp((a + shift) % 1, 0, 1);
-
-    public static float Flip(float a) => 1 - a;
-
-    public static float Bend(float a, float bend) => MathHelper.Clamp(MathF.Pow(a,MathF.Pow(MathHelper.Clamp(bend,-0.99f,100),2)), 0, 1);
-
     /// <summary>
-    /// this "windows" the phase (litreally a * LerpUtils.RectSin(a)
+    /// only works properly on ramp values. ramp first, then modify
     /// </summary>
-    /// <param name="a"></param>
+    /// <param name="value"></param>
+    /// <param name="amp"></param>
     /// <returns></returns>
-    public static float Window(float a) => a * MathF.Sin(a * MathF.PI);
+    public static LerpValue Formant(this LerpValue value, float amp) => ((amp * value.a) + ((1 - value.a) / 2));
+
+    public static LerpValue VShift(this LerpValue value, float shift)
+    {
+        var b = value.a;
+        while (b > 1)
+        {
+            b--;
+        }
+        while (b < 0)
+        {
+            b++;
+        }
+        return b;
+    }
+
+    public static LerpValue Flip(this LerpValue value) => 1 - value.a;
+
+    public static LerpValue Bend(this LerpValue value, float bend) => (MathF.Pow(value.a,MathF.Pow(MathHelper.Clamp(bend,-0.99f,100),2)));
     
-    public static float RectSin(float a, float sync = 1) => MathF.Sin(sync * a * MathF.PI);
+    public static LerpValue Window(this LerpValue value) => value.a * MathF.Sin(value.a * MathF.PI);
+    
+    public static LerpValue RectSin(this LerpValue value, float sync = 1) => MathF.Sin(sync * value.a * MathF.PI);
+    
+    
+}
+
+public class LerpValue
+{
+    public LerpValue(float a)
+    {
+        this.a = MathHelper.Clamp(a, 0, 1);
+    }
+    public float a;
+    public static implicit operator float(LerpValue value) => value.a;
+    public static implicit operator LerpValue(float value) => new LerpValue(value);
+    
 }

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using HarmonyMod.Assets;
+using HarmonyMod.Asset;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -19,6 +19,7 @@ public class ScreenCanvas
     public BlendState PreBlendState = BlendState.AlphaBlend;
     public BlendState PostBlendState = BlendState.AlphaBlend;
     public Color Color = Color.White;
+    public Effect shader = null;
 
     public static Texture2D fuck =
         ModContent.Request<Texture2D>(AssetDirectory.Placeholders + "Fuck").Value;
@@ -32,10 +33,10 @@ public class ScreenCanvas
         if (!Main.dedServ)
         {
             // adding this makes the rendertargets resize when the resolution is changed
-            Main.OnResolutionChanged += InitRT;
             // rendertargets should be initialized on the main thread :D
             Main.RunOnMainThread(() =>
             {
+                Main.OnResolutionChanged += InitRT;
                 renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, (int)(Main.screenWidth * SizeMultiplier.X), (int)(Main.screenHeight * SizeMultiplier.Y));
             });
         }
@@ -80,8 +81,8 @@ public class ScreenCanvas
             return;
         }
 
-        Main.spriteBatch.Begin(SpriteSortMode.Texture, PostBlendState, Main.DefaultSamplerState, default, Main.Rasterizer
-            );//Main.GameViewMatrix.TransformationMatrix);
+        Main.spriteBatch.Begin(SpriteSortMode.Texture, PostBlendState, Main.DefaultSamplerState, default, Main.Rasterizer,
+            shader, Matrix.Identity);//Main.GameViewMatrix.TransformationMatrix);
         if (PreBeginDrawRT != null)
         {
             PreBeginDrawRT.Invoke();

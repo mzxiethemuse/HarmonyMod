@@ -1,4 +1,4 @@
-using HarmonyMod.Assets;
+using HarmonyMod.Asset;
 using HarmonyMod.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,7 +6,7 @@ using ReLogic.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-using Assets = HarmonyMod.Assets;
+using Assets = HarmonyMod.Asset;
 namespace HarmonyMod.Content.Dust;
 
 
@@ -31,7 +31,7 @@ public class FancySmoke : ModDust
 
     public override bool PreDraw(Terraria.Dust dust)
     {
-        var tex = Assets.Assets.Textures["smoke_0" + (dust.customData ?? 1)] ;
+        var tex = Assets.Assets.VFXSmoke[((int?)dust.customData ?? 1) - 1];
         var scaleFactor = (float)size / tex.Value.Width;
         PixelationCanvas.AddAdditiveDrawAction(() =>
         {

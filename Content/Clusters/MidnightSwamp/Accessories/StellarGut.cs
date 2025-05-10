@@ -1,4 +1,4 @@
-using HarmonyMod.Assets;
+using HarmonyMod.Asset;
 using HarmonyMod.Content.Clusters.MidnightSwamp.Materials;
 using Terraria;
 using Terraria.ID;

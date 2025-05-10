@@ -1,4 +1,4 @@
-using HarmonyMod.Assets;
+using HarmonyMod.Asset;
 using HarmonyMod.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -59,7 +59,7 @@ public class Horb : ModProjectile
             Projectile.oldRot,
             Projectile.Size / 2,
             Trails.BasicColorLerp(Color.LimeGreen * 0.2f, Color.Transparent),
-             Trails.BasicWidthLerp(1, 6),
+             Trails.BasicWidthLerp(1, 3),
             2f,
             2f,
             "LightDisc"

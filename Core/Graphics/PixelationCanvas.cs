@@ -1,5 +1,5 @@
 using System;
-using HarmonyMod.Assets;
+using HarmonyMod.Asset;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -25,11 +25,11 @@ public class PixelationCanvas : ModSystem
             additiveCanvas.PreBlendState = BlendState.AlphaBlend;
             additiveCanvas.PostBlendState = BlendState.AlphaBlend;
             additiveCanvas.Color = Color.White;
-            additiveCanvas.PreBeginDrawToRT = () =>
-            {
-                GameShaders.Misc["HarmonyMod:Basic"].Apply(null);
-                // Main.spriteBatch.Draw(fuck, new Rectangle(134, 0, Main.screenWidth / 2, Main.screenHeight / 2), Color.White * 0.5f);
-            };
+            // additiveCanvas.PreBeginDrawToRT = () =>
+            // {
+            //     GameShaders.Misc["HarmonyMod:Outline"].Apply(null);
+            //     // Main.spriteBatch.Draw(fuck, new Rectangle(134, 0, Main.screenWidth / 2, Main.screenHeight / 2), Color.White * 0.5f);
+            // };
         });
         
         base.Load();

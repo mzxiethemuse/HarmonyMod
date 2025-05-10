@@ -20,7 +20,7 @@ public class GlobalWhip : GlobalProjectile
                     if (proj.ModProjectile is Minion minion)
                     {
                         minion.OnWhipped(projectile);
-                    }
+                    } 
                 }
             }
         }

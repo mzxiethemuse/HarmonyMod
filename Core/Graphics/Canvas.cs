@@ -12,18 +12,12 @@ namespace HarmonyMod.Core.Graphics;
 public class Canvas
 {
     RenderTarget2D target;
-    public List<Action> drawCalls;
+    // why do we do this? Because I'm killing myself.
+    public RenderTarget2D RenderTarget => target;
     public Color clearColor;
-    /// <summary>
-    ///  the blendstate to be used when drawing to the RenderTarget.
-    /// </summary>
-    public BlendState blendState = BlendState.AlphaBlend;
+    
     
     Vector2 size;
-    /// <summary>
-    /// A function to be called before drawing to the RenderTarget. Use this to apply shaders.
-    /// </summary>
-    public Action PreBeginDrawToRT;
 
     /// <summary>
     /// Creates a new Canvas, which manages its own RenderTarget. This should always be done on the Main Thread.
@@ -34,20 +28,17 @@ public class Canvas
     {
         size = new Vector2(x, y);
         clearColor = Color.Transparent;
-        drawCalls = new List<Action>();
         // make sure we r running on the client (server doesnt have eyes to see our beautiful work)
         if (!Main.dedServ)
         {
-            // commented out, will make it do things on ScreenCanvas
-            // adding this makes the rendertargets resize when the resolution is changed
-            // Main.OnResolutionChanged += InitRT;
+
             // rendertargets should be initialized on the main thread :D
             Main.RunOnMainThread(() =>
             {
                 target = new RenderTarget2D(Main.instance.GraphicsDevice, x, y);
             });
         }
-        On_Main.CheckMonoliths += DrawContents;
+        // On_Main.CheckMonoliths += DrawContents;
 
     }
 
@@ -75,45 +66,68 @@ public class Canvas
         Main.spriteBatch.End();
     }
     
-    public void Draw(Rectangle targetRect, Color color, BlendState? blendState2)
+    /// <summary>
+    /// this draws the rendertarget (assumes spriteBatch has begun). also automatically clears the target.
+    /// </summary>
+    /// <param name="targetRect"></param>
+    /// <param name="color"></param>
+    /// <param name="blendState2"></param>
+    public void Draw(Rectangle targetRect, Color color, bool clear = true)
     {
-        // make sure that the blendstate isnt null
-        if (blendState2 == null) blendState2 = BlendState.AlphaBlend;
-        
         //... or the RT itself
         if (target == null || target.IsDisposed)
         {
             return;
         }
         // this is how to draw things if you dont know
-        Main.spriteBatch.Begin(SpriteSortMode.Texture, blendState2, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         Main.spriteBatch.Draw(target, targetRect, color);//new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y), color);
-        Main.spriteBatch.End();
+
+        if (clear) {
+            var gd = Main.graphics.GraphicsDevice;
+            var oldRTs = gd.GetRenderTargets();
+            gd.SetRenderTarget(target);
+            gd.Clear(clearColor);
+            gd.SetRenderTargets(oldRTs);
+        }
     }
 
-
-    private void DrawContents(On_Main.orig_CheckMonoliths orig)
+    /// <summary>
+    /// this function Assumes that the spritebatch is ended.
+    /// </summary>
+    /// <param name="drawCall"></param>
+    public void DrawToCanvas(Action drawCall, BlendState blendState = null, Effect shader = null)
     {
-        //invoke original? idk i dont do On stuff 
-        orig.Invoke();
-        // get the old rendert rgaters
+
         var gd = Main.graphics.GraphicsDevice;
         var oldRTs = gd.GetRenderTargets();
         gd.SetRenderTarget(target);
-        gd.Clear(clearColor);
         
-        Main.spriteBatch.Begin(SpriteSortMode.Texture, blendState, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-        foreach (var drawcall in drawCalls)
-        {
-            drawcall.Invoke();
-        }        
+        Main.spriteBatch.Begin(SpriteSortMode.Texture, blendState, Main.DefaultSamplerState, default, Main.Rasterizer, shader, Matrix.Identity);
+        drawCall();
         Main.spriteBatch.End();
-        
-        drawCalls.Clear();
-        
-        // thgis is a dummy thing
-        gd.SetRenderTargets(oldRTs);
     }
+    
+    
+
+
+    // private void DrawContents(On_Main.orig_CheckMonoliths orig)
+    // {
+    //     //invoke original? idk i dont do On stuff 
+    //     orig.Invoke();
+    //     // get the old rendert rgaters
+    //     var gd = Main.graphics.GraphicsDevice;
+    //     var oldRTs = gd.GetRenderTargets();
+    //     gd.SetRenderTarget(target);
+    //     gd.Clear(clearColor);
+    //     
+    //     Main.spriteBatch.Begin(SpriteSortMode.Texture, blendState, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+    //
+    //     Main.spriteBatch.End();
+    //     
+    //     
+    //     // thgis is a dummy thing
+    //     gd.SetRenderTargets(oldRTs);
+    // }
     
     private void InitRT(Vector2 vec)
     {

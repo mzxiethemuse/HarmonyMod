@@ -34,7 +34,7 @@ float4 main(float2 coords : TEXCOORD0) : COLOR0
 	{
 	    timeMult = abs(sin(uTime + uOpacity * 0.33));
 	}
-    float4 yellow = float4(200, 200, 0, 255) * max(multA * 0.25, 0.5 * (color.w / 255)) * 0.5 * timeMult;
+    float4 yellow = float4(200, 200, 0, 255) * max(multA * 0.25, 0.5 * (color.w / 255)) * 0.3 * timeMult;
 	return color + yellow;
 }
 

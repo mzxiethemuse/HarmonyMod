@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyMod.Asset;
 using HarmonyMod.Content.Dust;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
@@ -17,6 +18,8 @@ namespace HarmonyMod.Content.Clusters.GoblinArmy.NPCs;
 
 public class GoblinMedic : ComplexNPC
 {
+    public override long CoinValue => Item.buyPrice(0, 0, 14, 1);
+
     public override void SetStaticDefaults()
     {
         NPCID.Sets.BelongsToInvasionGoblinArmy[Type] = true;
@@ -43,12 +46,13 @@ public class GoblinMedic : ComplexNPC
         {
             LookForDeaduns();
         }
-        
+
         if (deadGoblins.Count == 0 && State != 3)
         {
             State = 3;
             Timer = 0;
-        } 
+        }
+
         if (State == 0)
         {
             Walk(GoHere, 2f, true, 20f);
@@ -63,32 +67,36 @@ public class GoblinMedic : ComplexNPC
                 LookForDeaduns();
                 // i cant fucking reach ts cro
             }
+
             NPC.direction = NPC.velocity.X > 0 ? 1 : -1;
             NPC.spriteDirection = NPC.direction;
-        } else if (State == 1)
+        }
+        else if (State == 1)
         {
             if (Timer % 10 == 0)
             {
                 Terraria.Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.HealingPlus).velocity *= 0.3f;
             }
+
             Decelerate();
             if (Timer > 120)
             {
                 for (int i = 0; i < 30; i++)
                 {
-                    Terraria.Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.HealingPlus).velocity.Y *= 0.3f;
+                    Terraria.Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.HealingPlus).velocity.Y *=
+                        0.3f;
                 }
+
                 Timer = 0;
                 State = 0;
                 deadGoblins.RemoveAt((int)AI2);
                 NPC.NewNPCDirect(NPC.GetSource_FromAI(), GoHere, (int)AI3).life = 30;
-                
-                LookForDeaduns();
 
+                LookForDeaduns();
             }
-        } else if (State == 3)
+        }
+        else if (State == 3)
         {
-            
             Walk(GoHere, 2f, true, 20f);
 
             if (Timer > (60 * 10) || GoHere == Vector2.Zero || NPC.Distance(GoHere) < 30f || deadGoblins.Count != 0)
@@ -99,10 +107,10 @@ public class GoblinMedic : ComplexNPC
             }
         }
     }
+
     public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
         Lines.Line(GoHere, NPC.Center, Color.Red, 2);
-
     }
 
     private void LookForDeaduns()
@@ -128,7 +136,8 @@ public class DeadGoblinSystem : ModSystem
     public override void PostUpdateInvasions()
     {
         List<DeadGoblin> removeMe = new List<DeadGoblin>();
-        if (Main.invasionType == 1) {
+        if (Main.invasionType == 1)
+        {
             foreach (var goblin in GlobalGoblin.deadGoblins)
             {
                 goblin.time++;
@@ -136,11 +145,13 @@ public class DeadGoblinSystem : ModSystem
                 {
                     removeMe.Add(goblin);
                 }
+
                 PixelationCanvas.AddAdditiveDrawAction((() =>
                 {
-                    Main.spriteBatch.Draw(Assets.Assets.Textures["GenericItem"].Value,
-                        (goblin.position - Main.screenPosition) / 2 + new Vector2(0, (float)Math.Sin(Main.timeForVisualEffects / 8)), null, Color.White * 0.5f, 0f,
-                        Assets.Assets.Textures["GenericItem"].Size() / 2, 0.3f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(Assets.PlaceholderCube.Value,
+                        (goblin.position - Main.screenPosition) / 2 +
+                        new Vector2(0, (float)Math.Sin(Main.timeForVisualEffects / 8)), null, Color.White * 0.5f, 0f,
+                        Assets.PlaceholderCube.Size() / 2, 0.3f, SpriteEffects.None, 0f);
                 }));
             }
 
@@ -149,6 +160,7 @@ public class DeadGoblinSystem : ModSystem
                 GlobalGoblin.deadGoblins.Remove(remove);
             }
         }
+
         base.PostUpdateInvasions();
     }
 }

@@ -54,7 +54,7 @@ public class StarBurst : ModProjectile
     public override void OnKill(int timeLeft)
     {
         // SoundEngine.PlaySound(SoundID.Item45.WithPitchOffset(1.5f), Projectile.Center);
-        Burst.SpawnBurst("Explosion", Projectile.Center, Color.Azure * 0.4f, 30, 60);
+        Burst.SpawnBurst(Asset.Assets.VFXCircle, Projectile.Center, Color.Azure * 0.4f, 30, 60);
         base.OnKill(timeLeft);
     }
 }

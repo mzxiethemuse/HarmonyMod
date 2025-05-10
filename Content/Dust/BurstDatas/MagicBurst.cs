@@ -1,10 +1,12 @@
 using System;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 
 namespace HarmonyMod.Content.Dust.BurstDatas;
 
 public class MagicBurst : BurstData
 {
-    public MagicBurst(string texture, float duration, float radius) : base(texture, duration, radius)
+    public MagicBurst(Asset<Texture2D> texture, float duration, float radius) : base(texture, duration, radius)
     {
     }
     

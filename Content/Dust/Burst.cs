@@ -1,9 +1,10 @@
 using System;
-using HarmonyMod.Assets;
+using HarmonyMod.Asset;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -39,7 +40,7 @@ public class Burst : ModDust
             BurstData burstData = (BurstData)dust.customData;
             burstData.AI(ref dust);
 
-            var texture = Assets.Assets.Textures[burstData.texture];
+            var texture = burstData.texture;
             // burstData.time is the amt of time passed, timeLeft is the amount of time until duration expires
             var timeLeft = burstData.duration - burstData.time;
             var progress = Easing.OutSine(burstData.ScaleLerpMod(burstData.time / burstData.duration));
@@ -70,7 +71,7 @@ public class Burst : ModDust
     }
     
 
-    public static void SpawnBurst(string texture, Vector2 position, Color color, float radius, int duration)
+    public static void SpawnBurst(Asset<Texture2D> texture, Vector2 position, Color color, float radius, int duration)
     {
         
         var peepee = Terraria.Dust.NewDustPerfect(position, ModContent.DustType<Burst>(), null, 0, color with {A = 0}, 1f);
@@ -90,12 +91,12 @@ public class Burst : ModDust
 
 public class BurstData
 {
-    public string texture;
+    public Asset<Texture2D> texture;
     public float time;
     public float radius;
     public float duration;
     
-    public BurstData(string texture, float duration, float radius)
+    public BurstData(Asset<Texture2D> texture, float duration, float radius)
     {
         time = 0;
         this.duration = duration;

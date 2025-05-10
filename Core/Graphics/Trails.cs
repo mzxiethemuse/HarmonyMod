@@ -103,3 +103,16 @@ public static class Trails
     }
     
 }
+
+public struct TrailData
+{
+    public string Shader;
+    public VertexStrip.StripColorFunction ColorFunction;
+    public VertexStrip.StripHalfWidthFunction WidthFunction;
+    public TrailData(VertexStrip.StripColorFunction color, VertexStrip.StripHalfWidthFunction width, string effect)
+    {
+        this.Shader = effect;
+        this.ColorFunction = color;
+        this.WidthFunction = width;
+    }
+}

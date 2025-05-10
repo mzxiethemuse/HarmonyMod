@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,6 +17,7 @@ public abstract class ComplexNPC : ModNPC
     protected int HitDustAmount = 10;
     protected int HitDustType = DustID.Blood;
 
+    public virtual long CoinValue => 0;
 
     private int GuardShaderTime = 0;
     protected bool Guarded = false;
@@ -209,4 +211,18 @@ public abstract class ComplexNPC : ModNPC
     }
 
     public bool StateJustStarted() => Timer == 1;
+
+    public override void ModifyNPCLoot(NPCLoot npcLoot)
+    {
+        npcLoot.Add(ItemDropRule.Coins(CoinValue, true));
+        base.ModifyNPCLoot(npcLoot);
+    }
+}
+
+
+public static class ComplexNPCHelper {
+    public static ComplexNPC GetComplexNPC(this NPC npc)
+    {
+        return (ComplexNPC)npc.ModNPC;
+    }
 }

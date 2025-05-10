@@ -4,6 +4,7 @@ using Terraria;
 
 namespace HarmonyMod.Content.Dust;
 
+//TODO: rework ts
 public class DustEmitter
 {
     private int dustType;

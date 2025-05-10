@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using HarmonyMod.Assets;
+using HarmonyMod.Asset;
 using HarmonyMod.Content.Clusters.GoblinArmy.Weapons;
 using HarmonyMod.Content.Dust;
 using HarmonyMod.Content.Dust.BurstDatas;
 using HarmonyMod.Content.Projectiles;
-using HarmonyMod.Content.Projectiles.Explosions;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
@@ -173,7 +172,8 @@ public static class ExciseActions {
         DustEmitter.Emit(DustID.Torch, npc.position, npc.width, npc.height, 30, new Vector2(3f, 3f), default, default, 3f, 6f, null, true);
         hit.FinalDamage.Flat += 20f;
         // hit.FinalDamage *= 200f;
-        Burst.SpawnBurst(npc.Center, Color.OrangeRed, new MagicBurst("star_03", 88, 182));
+        
+        Burst.SpawnBurst(npc.Center, Color.OrangeRed, new MagicBurst(Assets.VFXStar[2], 88, 182));
         for (int i = 0; i < Main.rand.Next(8, 14); i++)
         {
             var proj = Projectile.NewProjectileDirect(npc.GetSource_OnHurt(null),
@@ -200,7 +200,7 @@ public static class ExciseActions {
             proj.penetrate = 3;
             
         }
-        Burst.SpawnBurst(npc.Center, Color.CornflowerBlue * 0.5f, new MagicBurst("star_03", 94, 176));
+        Burst.SpawnBurst(npc.Center, Color.CornflowerBlue * 0.5f, new MagicBurst(Assets.VFXStar[2], 94, 176));
 
         // Explosion.SpawnExplosion<MagicExplosion>(npc.Center, 0, 0f, Main.myPlayer, 176f, 94, Color.CornflowerBlue * 0.5f, 30, true, 0.3f);
         return hit;
@@ -214,7 +214,7 @@ public static class ExciseActions {
         hit.FinalDamage.Flat += 20f;
 
         hit.Defense *= 0.5f;
-        Burst.SpawnBurst(npc.Center, Color.Violet * 0.5f, new MagicBurst("star_03", 64, 196));
+        Burst.SpawnBurst(npc.Center, Color.Violet * 0.5f, new MagicBurst(Assets.VFXStar[2], 64, 196));
 
         // Explosion.SpawnExplosion<MagicExplosion>(npc.Center, 0, 0f, Main.myPlayer, 196f, 64, Color.Violet * 0.5f, 30, true, 0.3f);
 
@@ -227,8 +227,8 @@ public static class ExciseActions {
         hit.FinalDamage.Flat += 10f;
 
         hit.Defense *= 0.5f;
-        Burst.SpawnBurst(npc.Center, Color.DarkViolet * 0.5f, new BurstData("Explosion", 74, 136));
-        Burst.SpawnBurst(npc.Center, Color.Purple * 0.5f, new MagicBurst("star_03", 64, 196));
+        Burst.SpawnBurst(npc.Center, Color.DarkViolet * 0.5f, new BurstData(Assets.VFXCircle, 74, 136));
+        Burst.SpawnBurst(npc.Center, Color.Purple * 0.5f, new MagicBurst(Assets.VFXStar[2], 64, 196));
 
         // Explosion.SpawnExplosion<Explosion>(npc.Center, 0, 0f, Main.myPlayer, 136f, 74, Color.DarkViolet * 0.5f, 30, true, 0.3f);
         // Explosion.SpawnExplosion<MagicExplosion>(npc.Center, 20, 0f, Main.myPlayer, 196f, 64, Color.Purple * 0.5f, 30, true, 0.3f);
@@ -242,7 +242,7 @@ public static class ExciseActions {
         hit.FinalDamage.Flat *= 0.86f;
 
         hit.FinalDamage.Flat += 4;
-        Burst.SpawnBurst(npc.Center, Color.ForestGreen * 0.5f, new BurstData("Explosion", 44, 186));
+        Burst.SpawnBurst(npc.Center, Color.ForestGreen * 0.5f, new BurstData(Assets.VFXCircle, 44, 186));
 
         return hit;
     }
@@ -254,7 +254,7 @@ public static class ExciseActions {
         {
             complexNpc.OnParried();
         }
-        Burst.SpawnBurst(npc.Center, Color.LightGoldenrodYellow, new BurstData("Explosion", 44, 186));
+        Burst.SpawnBurst(npc.Center, Color.LightGoldenrodYellow, new BurstData(Assets.VFXCircle, 44, 186));
         SoundEngine.PlaySound(SoundID.Research);
 
         return hit;

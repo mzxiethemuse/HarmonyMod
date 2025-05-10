@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HarmonyMod.Asset;
 using HarmonyMod.Content.Dust;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
@@ -16,7 +17,7 @@ public class YurgWhip : ModItem
 
     public override void SetDefaults()
     {
-        Item.damage = 24;
+        Item.damage = 21;
         Item.DamageType = DamageClass.Melee;
         // Item.width = 18;
         // Item.height = 18;
@@ -27,21 +28,22 @@ public class YurgWhip : ModItem
         Item.rare = ItemRarityID.Blue;
         Item.autoReuse = true;
         Item.DefaultToWhip(ModContent.ProjectileType<YurgWhipProjectile>(), 24, 2, 3.5f);
-
     }
 
-    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
+        int type,
         int damage, float knockback)
     {
         // Projectile.NewProjectile(source, position, velocity, type, damage / 2, knockback, player.whoAmI);
 
-        Projectile.NewProjectile(source, position, velocity.RotatedByRandom(MathF.PI * 0.4f) * Main.rand.NextFloat(0.8f, 1f), type,
+        Projectile.NewProjectile(source, position,
+            velocity.RotatedByRandom(MathF.PI * 0.4f) * Main.rand.NextFloat(0.8f, 1f), type,
             (int)(damage * 0.75f), knockback, player.whoAmI);
 
-        
+
         return true;
     }
-    
+
     public override void AddRecipes()
     {
         Recipe recipe = CreateRecipe();
@@ -56,8 +58,9 @@ public class YurgWhip : ModItem
 
 public class YurgWhipProjectile : BaseWhipProjectile
 {
-    public static BurstData spikyballburst = new BurstData("ExplosionBlurred", 30, 20);
+    public static BurstData spikyballburst = new BurstData(Assets.VFXCircleBlurred, 30, 20);
     public override string Texture => $"HarmonyMod/Content/Clusters/GoblinArmy/Weapons/YurgProjectile";
+
     public override bool PreAI()
     {
         if (Projectile.ai[0] == 30f && Main.rand.NextBool(2))
@@ -65,14 +68,15 @@ public class YurgWhipProjectile : BaseWhipProjectile
             // GO MY MAGIC NUMBER
             if (Main.netMode != 2)
             {
-                // Burst.SpawnBurst(Projectile.Center, Color.Gray, spikyballburst); 
                 DustEmitter.Emit(DustID.WhiteTorch, Projectile.Center, 0, 0, 9);
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver2) * 2,
-                        ProjectileID.SpikyBall, 3, 2f, Projectile.owner);
-                
+                var p = Projectile.NewProjectileDirect(Projectile.GetSource_FromAI(), Projectile.Center,
+                    Projectile.velocity.RotatedByRandom(MathHelper.PiOver2) * 2,
+                    ProjectileID.SpikyBall, 3, 2f, Projectile.owner);
+                Burst.SpawnBurst(p.Center, Color.Gray, spikyballburst); 
 
             }
         }
+
         return true;
     }
 }

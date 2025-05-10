@@ -1,4 +1,5 @@
 using System;
+using HarmonyMod.Asset;
 using HarmonyMod.Content.Dust;
 using HarmonyMod.Content.Projectiles;
 using HarmonyMod.Core.Util;
@@ -14,6 +15,8 @@ namespace HarmonyMod.Content.Clusters.GoblinArmy.NPCs;
 
 public class GoblinBrawler : ComplexNPC
 {
+    public override long CoinValue => Item.buyPrice(0, 0, 57, 1);
+
     public override void SetStaticDefaults()
     {
         NPCID.Sets.BelongsToInvasionGoblinArmy[Type] = true;
@@ -132,12 +135,12 @@ public class GoblinBrawler : ComplexNPC
             if (NPC.collideY)
             {
                 SoundEngine.PlaySound(SoundID.DeerclopsRubbleAttack.WithPitchOffset(1.2f), NPC.Center);
-                Burst.SpawnBurst("smoke_04", NPC.Center, Color.DimGray * 0.4f, 100f, 30);
+                Burst.SpawnBurst(Assets.VFXSmoke[3], NPC.Center, Color.DimGray * 0.4f, 100f, 30);
 
                 Hitbox.SpawnHitbox(NPC.GetSource_FromAI(), NPC.Center, 90, 20, 25,20, NPC.whoAmI, false, true);
                 for (int i = -9; i < 9; i++)
                 {
-                    Burst.SpawnBurst("smoke_0" + Main.rand.Next(1, 4), NPC.Center + new Vector2(10 * i, Main.rand.Next(-20, 20)), Color.DarkGray * 0.4f, 20f + Main.rand.Next(-10, 11), 30);
+                    Burst.SpawnBurst(Assets.VFXSmoke[Main.rand.Next(0, 4)], NPC.Center + new Vector2(10 * i, Main.rand.Next(-20, 20)), Color.DarkGray * 0.4f, 20f + Main.rand.Next(-10, 11), 30);
 
                 }
 

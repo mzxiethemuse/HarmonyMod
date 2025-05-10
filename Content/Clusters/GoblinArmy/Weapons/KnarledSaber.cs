@@ -60,15 +60,15 @@ public class KnarledSaberSwing : SwordSwing
 {
 
     public override string Texture => "HarmonyMod/Content/Clusters/GoblinArmy/Weapons/KnarledSaber";
-    public override int width => 54;
-    public override int height => 54;
-    public override int lifeTime => 31;
+    public override int Width => 54;
+    public override int Height => 54;
+    public override int Lifetime => 31;
 
-    public override bool twoHanded => true;
+    public override bool TwoHanded => true;
     public override float StartRotation => -MathF.PI / 2;
     public override float EndRotation => MathF.PI / 2;
 
-    public override bool friendly => true;
+    public override bool Friendly => true;
     
 
     public override float GetLerpValue(float n)
@@ -84,16 +84,11 @@ public class KnarledSaberSwing : SwordSwing
 
         base.SetStaticDefaults();
     }
-    public override bool PreDraw(ref Color lightColor)
-    {
-        Trails.DrawTrail(Projectile.oldPos, Projectile.oldRot, Projectile.Size, Trails.BasicColorLerp(Color.BlueViolet * 0.6f, Color.Indigo * 0.6f), Trails.BasicWidthLerp(16f, 40f), -2.8f, 1.7f, "MagicMissile");
-// Trails.DrawTrailPixelated(Projectile.oldPos, Projectile.oldRot, Color.Red, Projectile.Size, 2f, 12f, -2.8f, 2f, "RainbowRod");
-        return true;
-    }
+
 
     public override void PostDraw(Color lightColor)
     {
-        if (Main.rand.NextBool(5)) Terraria.Dust.NewDust(Projectile.position, width, height, DustID.Shadowflame);
+        if (Main.rand.NextBool(5)) Terraria.Dust.NewDust(Projectile.position, Width, Height, DustID.Shadowflame);
 
         
         

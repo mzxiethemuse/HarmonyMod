@@ -1,5 +1,5 @@
 using System;
-using HarmonyMod.Assets;
+using HarmonyMod.Asset;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

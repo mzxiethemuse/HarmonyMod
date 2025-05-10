@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyMod.Asset;
 using HarmonyMod.Content.Clusters.GoblinArmy.Weapons;
 using HarmonyMod.Content.Dust;
 using HarmonyMod.Content.Dust.BurstDatas;
 using HarmonyMod.Content.Projectiles;
-using HarmonyMod.Content.Projectiles.Explosions;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -72,7 +72,7 @@ public class WarriorParry : ModPlayer
             {
                 SoundEngine.PlaySound(SoundID.Item88.WithPitchOffset(1.4f));
                 info.FinalDamage /= 2;
-                Burst.SpawnBurst("Explosion", Player.Center, Color.Orange, 40f, parryWindow * 2);
+                Burst.SpawnBurst(Assets.VFXCircle, Player.Center, Color.Orange, 40f, parryWindow * 2);
 
                 // Explosion.SpawnExplosion<Explosion>(Player.Center, 0, 3f,
                 //     Player.whoAmI, 64f, 34, Color.Orange, 20);
@@ -110,7 +110,7 @@ public class WarriorParry : ModPlayer
     {
         SoundEngine.PlaySound(SoundID.Item37.WithPitchOffset(0.25f));
 
-        Burst.SpawnBurst(Player.Center, Color.Yellow, new FollowPlayerBurst("Explosion", parryWindow * 2, 30f, Player.whoAmI));
+        Burst.SpawnBurst(Player.Center, Color.Yellow, new FollowPlayerBurst(Assets.VFXCircle, parryWindow * 2, 30f, Player.whoAmI));
 
         // Explosion.SpawnExplosion<ParryExplosion>(Player.Center + Player.velocity * 10, 0, 0f, Player.whoAmI, 30f,
         //     Player.GetModPlayer<WarriorPlayer>().parryWindow * 2, Color.Yellow * 0.8f);
@@ -154,7 +154,7 @@ public class WarriorParry : ModPlayer
     
     public static void ParryVFX(Player player)
     {
-        Burst.SpawnBurst(player.Center, Color.Lerp(Color.Yellow, Color.Orange, 0.5f), new FollowPlayerBurst("Explosion", player.GetModPlayer<WarriorParry>().parryWindow * 2, 50f, player.whoAmI));
+        Burst.SpawnBurst(player.Center, Color.Lerp(Color.Yellow, Color.Orange, 0.5f), new FollowPlayerBurst(Assets.VFXCircle, player.GetModPlayer<WarriorParry>().parryWindow * 2, 50f, player.whoAmI));
 
         // Burst.SpawnBurst("Explosion", player.Center, Color.Yellow, 50f, player.GetModPlayer<WarriorPlayer>().parryWindow * 2);
         // Explosion.SpawnExplosion<ParryExplosion>(player.Center + player.velocity * 10, 0, 0f, player.whoAmI, 40f,

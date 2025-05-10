@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyMod.Core.Graphics;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -102,5 +104,32 @@ public class ThrowingItem : GlobalItem
         {
             tooltips.Add(new TooltipLine(Mod, "HarmonyMod:ThrowingTooltippity", "Partially affected by both melee and ranged bonuses"));
         }
+    }
+}
+
+public class ThrowingProjectile : GlobalProjectile
+{
+    public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) => ThrowingItem.throwingProjectiles.Contains(entity.type);
+
+    public override void SetStaticDefaults()
+    {
+        // foreach (var type in ThrowingItem.throwingProjectiles)
+        // {
+        //     ProjectileID.Sets.TrailingMode[type] =
+        //         (ProjectileID.Sets.TrailingMode[type] == 0 ? 2 : ProjectileID.Sets.TrailingMode[type]);
+        //     ProjectileID.Sets.TrailCacheLength[type] =  
+        //         (ProjectileID.Sets.TrailCacheLength[type] == 0 ? 20 : ProjectileID.Sets.TrailingMode[type]);
+        // }
+    }
+
+    public override bool PreDrawExtras(Projectile projectile)
+    {
+       Trails.DrawTrail(projectile.oldPos, projectile.oldRot, Color.WhiteSmoke * 0.5f, projectile.Size, 0, projectile.width / 2, 2f, -2f, "LightDisc");
+       return true;
+    }
+
+    public override bool PreDraw(Projectile projectile, ref Color lightColor)
+    {
+        return base.PreDraw(projectile, ref lightColor);
     }
 }

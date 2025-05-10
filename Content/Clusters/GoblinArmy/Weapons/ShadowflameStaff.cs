@@ -1,10 +1,10 @@
-using HarmonyMod.Assets;
+using HarmonyMod.Asset;
 using HarmonyMod.Content.Dust;
 using HarmonyMod.Content.Projectiles;
-using HarmonyMod.Content.Projectiles.Explosions;
 using HarmonyMod.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -35,7 +35,7 @@ public class ShadowflameStaff : ModItem
         Item.shootSpeed = 8f;
         
         Item.DamageType = DamageClass.Magic;
-        Item.damage = 20;
+        Item.damage = 13;
         Item.knockBack = 4f;
         
         Item.UseSound = SoundID.Item8.WithPitchOffset(1.2f);
@@ -64,9 +64,9 @@ public class ShadowflameStaff : ModItem
 public class ShadowflameBolt : ModProjectile
 {
     public override string Texture => $"Terraria/Images/NPC_{NPCID.ChaosBall}";
-    public static Texture2D trailTexture => ModContent.Request<Texture2D>($"Terraria/Images/NPC_{NPCID.ChaosBall}").Value;
 
     public static DustEmitter burst = new DustEmitter(DustID.Shadowflame);
+    
     public override void SetStaticDefaults()
     {
         burst.SetVelocitySpread(new Vector2(1, 1));
@@ -126,7 +126,7 @@ public class ShadowflameBolt : ModProjectile
     {
         burst.Emit(Projectile.position, 16, 16, 32);
         SoundEngine.PlaySound(SoundID.Item110, Projectile.position);
-        Burst.SpawnBurst("star_03", Projectile.Center, Color.BlueViolet, 36f, 44);
+        Burst.SpawnBurst(Assets.VFXStar[2], Projectile.Center, Color.BlueViolet, 36f, 44);
         // Explosion.SpawnExplosion<MagicExplosion>(Projectile.Center, 0, 0f, Projectile.owner, 36f, 44, Color.BlueViolet, 30);
     }
     

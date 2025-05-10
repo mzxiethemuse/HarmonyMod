@@ -17,7 +17,8 @@ namespace HarmonyMod.Content.Clusters.GoblinArmy.NPCs;
 
 public class GoblinEngineer : ComplexNPC
 {
-    
+    public override long CoinValue => Item.buyPrice(0, 0, 36, 1);
+
     private const float SeekGoblinState = 0;
     private const float BuildState = 1;
     private const float WalkToPointState = 2;

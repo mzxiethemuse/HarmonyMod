@@ -28,6 +28,11 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<EffectFiles Include="**/*.fx" />
+		<EffectFiles Include="**/*.hlsl" />
+
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Content\Clusters\Forest\Graphics\" />
 	</ItemGroup>
 
 	<Target Name="BuildEffects" BeforeTargets="BuildMod" Condition="$([MSBuild]::IsOSPlatform('Windows'))" Inputs="@(EffectFiles->'%(RecursiveDir)%(FileName)%(Extension)')" Outputs="@(EffectFiles->'%(RecursiveDir)%(FileName).fxc')">

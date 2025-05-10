@@ -1,4 +1,4 @@
-using HarmonyMod.Assets;
+using HarmonyMod.Asset;
 using HarmonyMod.Content.Reworks.Ranger;
 using Terraria;
 using Terraria.ID;
