@@ -51,7 +51,6 @@ public class SanguineNecromancer : ComplexNPC
             }
             if (Timer != 0 && Timer % 30 == 0)
             {
-                Main.NewText(GetTarget().Distance(NPC.Center));
                 // Decide what attack to use?
                 bool foundAttack = false;
                 while (!foundAttack)
@@ -87,7 +86,7 @@ public class SanguineNecromancer : ComplexNPC
                             break;
                         case 3:
                         case 4:
-                            if (GetTarget().Distance(NPC.Center) < 200)
+                            if (GetTarget().Distance(NPC.Center) < 130)
                             {
                                 State = 3;
                                 Timer = 0;
@@ -166,7 +165,6 @@ public class SanguineNecromancer : ComplexNPC
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath1.WithPitchOffset(1.5f), NPC.position);
 
-                Burst.SpawnBurst(NPC.Center, Color.Red * 0.27f, new InBurst(Assets.VFXLight[0], 90, 60));
                 Burst.SpawnBurst(NPC.Center, Color.DarkSalmon * 0.5f, new InBurst(Assets.VFXCircleBlurred, 90, 60));
 
             };
@@ -177,7 +175,7 @@ public class SanguineNecromancer : ComplexNPC
                 for (int i = 0; i < 6; i++)
                 {
 
-                    var p = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center + new Vector2(Utility.VaguelyNormalDist(-90, 90), NPC.height / 2), new Vector2(Main.rand.NextFloat(-0.7f, 0.7f), -1),
+                    var p = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center + new Vector2(MathUtility.VaguelyNormalDist(-90, 90), NPC.height / 2), new Vector2(Main.rand.NextFloat(-0.7f, 0.7f), -1),
                         ProjectileID.SharpTears, 30, 8f);
                     p.friendly = false;
                     p.hostile = true;
@@ -201,7 +199,7 @@ public class SanguineNecromancer : ComplexNPC
         }
         
         
-        Lighting.AddLight(NPC.Center, Color.Red.ToVector3());
+        // Lighting.AddLight(NPC.Center, Color.Red.ToVector3());
     }
 
 

@@ -68,7 +68,7 @@ Items: {
 
 	CompoundEye: {
 		DisplayName: Ommatidia
-		Tooltip: Greatly increases accuracy while moving quickly
+		Tooltip: Increases accuracy while moving quickly
 	}
 
 	SuperLaserSight: {
@@ -193,24 +193,12 @@ Items: {
 		Tooltip: The essence of transmutation magic
 	}
 
-	StarMudItem: {
-		DisplayName: Star Mud Item
-		Tooltip: ""
-	}
-
-	RootStaff: {
-		DisplayName: Root Staff
-		Tooltip: ""
-	}
-
 	LivingHarp: {
 		DisplayName: Living Harp
 		Tooltip:
 			'''
 			Summons mystical strings
-			The strings can be strummed by projectiles or players
-			The strings damage nearby enemies when strummed by a projectile, and release healing orbs when strummed by player movement
-			Healing scales with magic bonuses, splash damage scales with summon bonuses
+			The strings can be strummed by projectiles to damage nearby enemies
 			'''
 	}
 
@@ -221,7 +209,7 @@ Items: {
 
 	Claymore: {
 		DisplayName: Claymore
-		Tooltip: Right-click to perform a specialized dash-parry
+		Tooltip: ""
 	}
 
 	Communion: {
@@ -229,7 +217,7 @@ Items: {
 		Tooltip:
 			'''
 			Heals you after not taking damage for 5 seconds
-			'Drink it in'
+			'Drink it all in'
 			'''
 	}
 
@@ -238,13 +226,47 @@ Items: {
 		Tooltip:
 			'''
 			Hold to build up a bloody sneeze
-			Enemies hit by the sneeze become cursed, taking more damage from non-magical sources
+			Enemies hit by the sneeze become cursed
+			Cursed enemies burst into Leper Flesh when killed
 			'''
 	}
 
 	DuskSickle: {
 		DisplayName: Dusk Sickle
+		Tooltip:
+			'''
+			      Increases air velocity
+			      Damage scales with velocity
+			'''
+	}
+
+	BayonetRifle: {
+		DisplayName: Bayonet Rifle
+		Tooltip:
+			'''
+			Right click to use the bayonet to keep enemies at bay
+			'It's always faster to stab than to reload'
+			'''
+	}
+
+	BellOfWarning: {
+		DisplayName: Bell Of Warning
+		Tooltip:
+			'''
+			Fires a warning ring
+			The ring explodes at your cursor, detonating nearby Leper Flesh
+			Leper Flesh can be created by other weapons
+			'''
+	}
+
+	StarMudItem: {
+		DisplayName: Star Mud Item
 		Tooltip: ""
+	}
+
+	ExecutionerAxe: {
+		DisplayName: Executioner Axe
+		Tooltip: Critical hits and kills dismember enemies, spawning Leper Flesh
 	}
 }
 
@@ -269,6 +291,9 @@ Projectiles: {
 	ClaymoreSwing.DisplayName: Claymore Swing
 	HemoptysisSneeze.DisplayName: Hemoptysis Sneeze
 	DuskSickleSwing.DisplayName: Dusk Sickle Swing
+	BayonetRifleStab.DisplayName: Bayonet Rifle Stab
+	LeperFlesh.DisplayName: Leper Flesh
+	ExecutionerAxeSwing.DisplayName: Executioner Axe Swing
 }
 
 Keybinds.Parry.DisplayName: Parry
@@ -282,7 +307,7 @@ NPCs: {
 	GoblinBrawler.DisplayName: Goblin Brawler
 	StellarToad.DisplayName: Stellar Toad
 	MidnightFly.DisplayName: Midnight Fly
-	FleshBall.DisplayName: Nodule
+	FleshBall.DisplayName: Leper Flesh
 	MutilatedZombie.DisplayName: Leper
 	SanguineNecromancer.DisplayName: Sanguine Necromancer
 }
@@ -290,8 +315,8 @@ NPCs: {
 Tiles.StarMud.MapEntry: Star Mud
 
 Buffs: {
-	HemoptysisCurse: {
-		DisplayName: Hemoptysis Curse
-		Description: Mods.HarmonyMod.Buffs.HemoptysisCurse.Description
+	SanguineCurse: {
+		DisplayName: Sanguine Curse
+		Description: Mods.HarmonyMod.Buffs.SanguineCurse.Description
 	}
 }

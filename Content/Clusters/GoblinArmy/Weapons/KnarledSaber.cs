@@ -79,7 +79,7 @@ public class KnarledSaberSwing : SwordSwing
     public override void SetStaticDefaults()
     {
 
-        ProjectileID.Sets.TrailingMode[this.Type] = 4;
+        ProjectileID.Sets.TrailingMode[this.Type] = 2;
         ProjectileID.Sets.TrailCacheLength[this.Type] = 34;
 
         base.SetStaticDefaults();

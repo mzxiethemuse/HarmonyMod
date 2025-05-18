@@ -53,7 +53,10 @@ public class FloorArm : ModProjectile
             if (Projectile.timeLeft / 40f > 0.45f && Projectile.ai[1] != 255)
             {
                 Projectile.ai[1] = 255;
-                SoundEngine.PlaySound(SoundID.WormDig.WithPitchOffset(0.5f), Projectile.position);
+                if (Projectile.timeLeft % 30 == 0)
+                {
+                    SoundEngine.PlaySound(SoundID.WormDig.WithPitchOffset(0.5f), Projectile.position);
+                }
                 Burst.SpawnBurst(Assets.VFXCircleBlurred, Projectile.Center, Color.Red * 0.2f, 20, 20);
                 DustEmitter.Emit(ModContent.DustType<FancySmoke>(), Projectile.Center, 1, 1, 8,
                     new Vector2(0.1f, 0.5f), Color.DarkKhaki * 0.2f, Color.SaddleBrown * 0.5f);

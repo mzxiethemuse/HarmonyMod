@@ -50,6 +50,20 @@ public static class Trails
         graphicsDevice.RasterizerState = save;
     }
     
+    public static void DrawTrail(Vector2[] positions, float[] rotations, Vector2 size, VertexStrip.StripColorFunction color, VertexStrip.StripHalfWidthFunction width, MiscShaderData shader)
+    {
+        GraphicsDevice graphicsDevice = Main.graphics.GraphicsDevice;
+        RasterizerState save = graphicsDevice.RasterizerState;
+        graphicsDevice.RasterizerState = RasterizerState.CullNone;
+        VertexStrip vertexStrip = new();
+        shader.Apply();
+        vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, color,
+            width, -Main.screenPosition + size / 2f);
+        vertexStrip.DrawTrail();
+        Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+        graphicsDevice.RasterizerState = save;
+    }
+    
     public static void DrawTrailPixelated(Vector2[] positions, float[] rotations, Vector2 size, VertexStrip.StripColorFunction color, VertexStrip.StripHalfWidthFunction width, float saturation, float opacity, string shader)
     {
         PixelationCanvas.AddAdditiveDrawAction(() =>

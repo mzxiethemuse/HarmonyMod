@@ -1,6 +1,7 @@
 using System;
 using HarmonyMod.Asset;
 using HarmonyMod.Content.Dust;
+using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -15,6 +16,7 @@ public class DuskSickle : ModItem
     public static int time = 28;
     private const float startRot = -MathF.PI / 3;
     private const float endRot = MathF.PI / 1.5f;
+    
     
     public override void SetDefaults()
     {
@@ -77,6 +79,7 @@ public class DuskSickle : ModItem
 
 public class DuskSickleSwing : SwordSwing
 {
+    
     public override string Texture => AssetDirectory.Content + "Clusters/BloodMoon/Items/Weapons/DuskSickle";
 
     public override int Width => 40;
@@ -89,6 +92,10 @@ public class DuskSickleSwing : SwordSwing
 
     public override float StartRotation => 0;
     public override float EndRotation => MathF.PI / 2;
+    
+
+    
+    
 
     public override Vector2 HoldOffset => Vector2.Lerp(new Vector2(0, 0), new Vector2(10, -10),
         LerpUtils.RectSin((Lifetime - Projectile.timeLeft) / Lifetime)
@@ -117,4 +124,6 @@ public class DuskSickleSwing : SwordSwing
         modifiers.FlatBonusDamage += (int)owner.velocity.Length() * 2;
         
     }
+
+
 }

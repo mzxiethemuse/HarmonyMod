@@ -1,4 +1,3 @@
-using HarmonyMod.Content.Reworks.Warrior;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -57,21 +56,21 @@ public class ObsidianCaltrops : ModItem
 
 public class ObsidianCaltropProjectile : ModProjectile 
 {
-    public override void SetStaticDefaults()
-    {
-        WarriorParry.parryActions.Add(ModContent.ProjectileType<ObsidianCaltropProjectile>(),
-            (player, projectile) =>
-            {
-                if (Main.myPlayer == player.whoAmI)
-                {
-                    projectile.velocity = player.DirectionTo(Main.MouseWorld) * 20;
-                    projectile.damage += 3;
-                    projectile.timeLeft = 600;
-                    projectile.ai[2] = 69f;
-                }
-            }
-            );
-    }
+    // public override void SetStaticDefaults()
+    // {
+    //     WarriorParry.parryActions.Add(ModContent.ProjectileType<ObsidianCaltropProjectile>(),
+    //         (player, projectile) =>
+    //         {
+    //             if (Main.myPlayer == player.whoAmI)
+    //             {
+    //                 projectile.velocity = player.DirectionTo(Main.MouseWorld) * 20;
+    //                 projectile.damage += 3;
+    //                 projectile.timeLeft = 600;
+    //                 projectile.ai[2] = 69f;
+    //             }
+    //         }
+    //         );
+    // }
 
     public override void SetDefaults()
     {

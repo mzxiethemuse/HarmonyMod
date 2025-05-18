@@ -82,13 +82,14 @@ public class FleshBall : ModNPC
 
     public override void OnSpawn(IEntitySource source)
     {
-        NPC.velocity = Main.rand.NextVector2CircularEdge(8f, 3f);
+        NPC.velocity = Main.rand.NextVector2CircularEdge(4f, 2f);
         NPC.velocity.Y = -MathF.Abs(NPC.velocity.Y);
         NPC.immuneTime = 30;
     }
 
     public override void AI()
     {
+        NPC.ai[3]++;
         NPC.velocity *= 0.95f;
         if (NPC.collideX || NPC.collideY)
         {
@@ -105,5 +106,15 @@ public class FleshBall : ModNPC
         }
 
         base.DrawEffects(ref drawColor);
+    }
+
+    public override bool? CanBeHitByItem(Player player, Item item)
+    {
+        return (NPC.ai[3] > 12);
+    }
+
+    public override bool? CanBeHitByProjectile(Projectile projectile)
+    {
+        return (NPC.ai[3] > 12);
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.Xna.Framework.Input;
 using System;
+using HarmonyMod.Core.Util;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -13,9 +14,9 @@ namespace HarmonyMod.Content.Reworks.Ranger
     {
 
         // defaults for overall balacning
-        public static float globalRecoilDefault = 2;
+        public static float globalRecoilDefault = 1.5f;
         public static float globalRecoilPower = 0.4f;
-        public static float globalRecoilDecay = 20;
+        public static float globalRecoilDecay = 25;
         public static float eyeattachmentspeedreq = 10f;
 
         // global recoil value
@@ -76,6 +77,8 @@ namespace HarmonyMod.Content.Reworks.Ranger
             if (Main.MouseWorld.X > Player.Center.X + 50 && Main.MouseWorld.X < Player.Center.X - 50) Xamount *= 2;
             recoilY += Yamount;
             recoilX += Xamount;
+            recoilY = MathUtility.AttenuateKindaMaybeIdkWhatToCallThisFunction(recoilY, 60);
+            recoilX = MathUtility.AttenuateKindaMaybeIdkWhatToCallThisFunction(recoilX, 60);
 
             // draw muzzleflash
             //float dirToMouse = (Main.MouseWorld - Player.Center).ToRotation();

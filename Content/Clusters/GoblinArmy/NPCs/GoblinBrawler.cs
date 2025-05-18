@@ -15,6 +15,14 @@ namespace HarmonyMod.Content.Clusters.GoblinArmy.NPCs;
 
 public class GoblinBrawler : ComplexNPC
 {
+    
+    
+    enum AIStates {
+        Walk = 0,
+        Dash = 3,
+        Jump1 = 4,
+        Jump2 = 5,
+    }
     public override long CoinValue => Item.buyPrice(0, 0, 57, 1);
 
     public override void SetStaticDefaults()
@@ -28,7 +36,7 @@ public class GoblinBrawler : ComplexNPC
         NPC.height = 46;
         
 
-        NPC.lifeMax = 180;
+        NPC.lifeMax = 280;
         NPC.defense = 20;
         NPC.damage = 35;
         NPC.knockBackResist = 0.2f;
@@ -41,6 +49,7 @@ public class GoblinBrawler : ComplexNPC
 
     public override void AI()
     {
+        
         NPC.spriteDirection = NPC.direction;
         Timer++;
         AI2--;
@@ -56,13 +65,13 @@ public class GoblinBrawler : ComplexNPC
             //     State = 1;
             // }
             if (Main.rand.NextBool(2)) {
-                if (Diff(NPC.Center.X, playerPos.X) < 400f && Diff(NPC.Center.Y, playerPos.Y) < 100f && Timer > 270 &&
-                    Main.rand.NextBool(40))
+                if (Diff(NPC.Center.X, playerPos.X) < 500f && Diff(NPC.Center.Y, playerPos.Y) < 170f && Timer > 270 &&
+                    Main.rand.NextBool(33))
                 {
                     SoundEngine.PlaySound(SoundID.NPCHit40.WithPitchOffset(0.8f), NPC.Center);
                     NPC.TargetClosest();
                     Timer = 0;
-                    State = 3;
+                    State = (int)AIStates.Dash;
                     NPC.netUpdate = true;
                 }
 
@@ -73,7 +82,7 @@ public class GoblinBrawler : ComplexNPC
                     TryJump(6f, 4f * (playerPos.X > NPC.Center.X ? 1 : -1));
 
                     Timer = 0;
-                    State = 4;
+                    State = (int)AIStates.Jump1;
                     NPC.netUpdate = true;
                 }
             }
@@ -89,7 +98,7 @@ public class GoblinBrawler : ComplexNPC
                 Timer = 0;
                 State = 0;
             }
-        } else if (State == 3) // dash attack
+        } else if (State == (int)AIStates.Dash) // dash attack
         {
 
             Guarded = true;
@@ -112,7 +121,7 @@ public class GoblinBrawler : ComplexNPC
                     State = 0;
                 }
             }
-        } else if (State == 4) // jump part 1
+        } else if (State == (int)AIStates.Jump1) // jump part 1
         {
             var playerPos = GetTarget().Center;
 
@@ -130,7 +139,7 @@ public class GoblinBrawler : ComplexNPC
                     State = 5;
                 }
             }
-        } else if (State == 5) // jump part 2
+        } else if (State == (int)AIStates.Jump2) // jump part 2
         {
             if (NPC.collideY)
             {
@@ -156,24 +165,30 @@ public class GoblinBrawler : ComplexNPC
         }
     }
 
-    public override bool OnParried()
+    public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
     {
-        NPC.defense -= 5;
-        Timer = 0;
-        State = 2;
-        if (State == 3)
-        {
-            NPC.life -= 30;
-            NPC.checkDead();
-            NPC.netUpdate = true;
-            Timer -= 60;
-        }
-        return base.OnParried();
+        modifiers.Knockback += 0.5f;
+        base.ModifyHitPlayer(target, ref modifiers);
     }
 
-    public override bool CanHitPlayer(Player target, ref int cooldownSlot)
-    {
-        return Guarded;
-    }
+    // public override bool OnParried()
+    // {
+    //     NPC.defense -= 5;
+    //     Timer = 0;
+    //     State = 2;
+    //     if (State == 3)
+    //     {
+    //         NPC.life -= 30;
+    //         NPC.checkDead();
+    //         NPC.netUpdate = true;
+    //         Timer -= 60;
+    //     }
+    //     return base.OnParried();
+    // }
+
+    // public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+    // {
+    //     return Guarded;
+    // }
     
 }

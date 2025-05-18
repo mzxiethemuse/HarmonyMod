@@ -12,6 +12,14 @@
 	  <Compile Remove="Content\NewFolder\**" />
 	  <EmbeddedResource Remove="Content\NewFolder\**" />
 	  <None Remove="Content\NewFolder\**" />
+	  <Compile Remove="Content\Reworks\Parry\**" />
+	  <EmbeddedResource Remove="Content\Reworks\Parry\**" />
+	  <AdditionalFiles Remove="Content\Reworks\Parry\**" />
+	  <None Remove="Content\Reworks\Parry\**" />
+	  <Compile Remove="Content\Clusters\MidnightSwamp\**" />
+	  <EmbeddedResource Remove="Content\Clusters\MidnightSwamp\**" />
+	  <AdditionalFiles Remove="Content\Clusters\MidnightSwamp\**" />
+	  <None Remove="Content\Clusters\MidnightSwamp\**" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Content\Dust\BulletCasing.png" />
@@ -29,10 +37,13 @@
 	<ItemGroup>
 		<EffectFiles Include="**/*.fx" />
 		<EffectFiles Include="**/*.hlsl" />
+		<EffectFiles Remove="Content\Reworks\Parry\**" />
+		<EffectFiles Remove="Content\Clusters\MidnightSwamp\**" />
 
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Content\Clusters\Forest\Graphics\" />
+	  <Folder Include="Content\Clusters\Underground\" />
 	</ItemGroup>
 
 	<Target Name="BuildEffects" BeforeTargets="BuildMod" Condition="$([MSBuild]::IsOSPlatform('Windows'))" Inputs="@(EffectFiles->'%(RecursiveDir)%(FileName)%(Extension)')" Outputs="@(EffectFiles->'%(RecursiveDir)%(FileName).fxc')">

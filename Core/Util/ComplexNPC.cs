@@ -20,6 +20,10 @@ public abstract class ComplexNPC : ModNPC
     public virtual long CoinValue => 0;
 
     private int GuardShaderTime = 0;
+    
+    /// <summary>
+    /// Depreciated
+    /// </summary>
     protected bool Guarded = false;
     
     
@@ -46,15 +50,15 @@ public abstract class ComplexNPC : ModNPC
 
     public override bool PreAI()
     {
-        if (Guarded)
-        {
-            GuardShaderTime++;
-        }
-        else
-        {
-            GuardShaderTime = 0;
-        }
-        Guarded = false;
+        // if (Guarded)
+        // {
+        //     GuardShaderTime++;
+        // }
+        // else
+        // {
+        //     GuardShaderTime = 0;
+        // }
+        // Guarded = false;
 
         FallThroughPlatforms = false;
         return base.PreAI();
@@ -65,6 +69,7 @@ public abstract class ComplexNPC : ModNPC
 
         // if (tryReachY) FallThroughPlatforms = true;
 
+        // check if npc has reached the target range
         if ((desiredPos * new Vector2(1, 0)).Distance(NPC.Center * new Vector2(1, 0)) < xTargetRange)
         {
 
@@ -85,8 +90,12 @@ public abstract class ComplexNPC : ModNPC
         }
         else
         {
+            // if the npc is on the ground, move
             NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, NPC.position.X > desiredPos.X ? -speed : speed,
                 Acceleration);
+            
+
+            // if against a wall
             if (NPC.collideX)
             {
                 TryJump(JumpHeight);
@@ -94,6 +103,7 @@ public abstract class ComplexNPC : ModNPC
                     ref NPC.gfxOffY);
             }
 
+            // fall thru platforms
             if (tryReachY)
             {
                 if (desiredPos.Y >= NPC.Center.Y + NPC.height / 2)
@@ -102,6 +112,7 @@ public abstract class ComplexNPC : ModNPC
                 }
             }
         }
+        
     }
 
 
@@ -151,23 +162,23 @@ public abstract class ComplexNPC : ModNPC
     //     }
     // }
 
-    public virtual bool OnParried()
-    {
-        for (int i = 0; i < HitDustAmount; i++)
-        {
-            Dust.NewDust(NPC.position, NPC.width, NPC.height, HitDustType);
-        }
-
-        var ret = Guarded;
-        Guarded = false;
-        Main.NewText(ret);
-        return ret;
-    }
+    // public virtual bool OnParried()
+    // {
+    //     for (int i = 0; i < HitDustAmount; i++)
+    //     {
+    //         Dust.NewDust(NPC.position, NPC.width, NPC.height, HitDustType);
+    //     }
+    //
+    //     var ret = Guarded;
+    //     Guarded = false;
+    //     Main.NewText(ret);
+    //     return ret;
+    // }
 
     
     public override void HitEffect(NPC.HitInfo hit)
     {
-        if (Guarded && hit.DamageType != DamageClass.Magic && hit.DamageType != DamageClass.Summon) CombatText.NewText(new Rectangle((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height), Color.LightGoldenrodYellow, "Blocked!");
+        // if (Guarded && hit.DamageType != DamageClass.Magic && hit.DamageType != DamageClass.Summon) CombatText.NewText(new Rectangle((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height), Color.LightGoldenrodYellow, "Blocked!");
         for (int i = 0; i < HitDustAmount; i++)
         {
             Dust.NewDust(NPC.position, NPC.width, NPC.height, HitDustType);
@@ -178,36 +189,36 @@ public abstract class ComplexNPC : ModNPC
 
     public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
     {
-        if (Guarded && modifiers.DamageType != DamageClass.Magic && modifiers.DamageType != DamageClass.Summon)
-        {
-            modifiers.FinalDamage *= 0;
-            modifiers.HideCombatText();
-        }
+        // if (Guarded && modifiers.DamageType != DamageClass.Magic && modifiers.DamageType != DamageClass.Summon)
+        // {
+        //     modifiers.FinalDamage *= 0;
+        //     modifiers.HideCombatText();
+        // }
     }
     
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        if (Guarded)
-        {
-            Main.spriteBatch.End();
-            GameShaders.Misc["HarmonyMod:GuardShader"].UseOpacity(GuardShaderTime);
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default,
-                Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Misc["HarmonyMod:GuardShader"].Apply();
-        }
+        // if (Guarded)
+        // {
+        //     Main.spriteBatch.End();
+        //     GameShaders.Misc["HarmonyMod:GuardShader"].UseOpacity(GuardShaderTime);
+        //     Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default,
+        //         Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        //     GameShaders.Misc["HarmonyMod:GuardShader"].Apply();
+        // }
 
         return true;
     }
 
     public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        if (Guarded)
-        {
-            Main.spriteBatch.End();
-
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default,
-                Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-        }
+        // if (Guarded)
+        // {
+        //     Main.spriteBatch.End();
+        //
+        //     Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default,
+        //         Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        // }
     }
 
     public bool StateJustStarted() => Timer == 1;

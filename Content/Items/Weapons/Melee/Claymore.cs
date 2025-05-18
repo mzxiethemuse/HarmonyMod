@@ -44,16 +44,13 @@ public class Claymore : ModItem
     {
         if (player.altFunctionUse == 2 && player.whoAmI == Main.myPlayer)
         {
-            if (player.ParryPlayer().parryCooldownTimer < 0)
-            {
-                player.velocity.X += 7.5f * player.direction;
-                player.ParryPlayer().OnParryKeyPressed();
-                var proj = Projectile.NewProjectileDirect(player.GetSource_ItemUse(Item), player.Center, Vector2.Zero, ModContent.ProjectileType<ClaymoreSwing>(), 10, 14.5f, player.whoAmI);
+            
+            player.velocity.X += 7.5f * player.direction;
+            var proj = Projectile.NewProjectileDirect(player.GetSource_ItemUse(Item), player.Center, Vector2.Zero, ModContent.ProjectileType<ClaymoreSwing>(), 10, 14.5f, player.whoAmI);
 
-                if (proj.ModProjectile is ClaymoreSwing projectile)
-                {
-                    (projectile.startRotation, projectile.endRotation) = (projectile.endRotation, projectile.startRotation);
-                }
+            if (proj.ModProjectile is ClaymoreSwing projectile)
+            {
+                (projectile.startRotation, projectile.endRotation) = (projectile.endRotation, projectile.startRotation);
             }
             else
             {
@@ -99,7 +96,7 @@ public class Claymore : ModItem
 
 public class ClaymoreSwing : SwordSwing
 {
-    public override SwordSwingType SwingType => SwordSwingType.Dueling;
+    public override SwordSwingType SwingType => SwordSwingType.Basic;
 
     public override string Texture => "HarmonyMod/Content/Items/Weapons/Melee/Claymore";
     public override int Width => 54;
@@ -128,5 +125,30 @@ public class ClaymoreSwing : SwordSwing
                 new InBurst(Assets.VFXStar[3], 16, 18));
         }
         base.OnHitNPC(target, hit, damageDone);
+    }
+    
+    public override void SetStaticDefaults()
+    {
+
+        ProjectileID.Sets.TrailingMode[this.Type] = 3;
+        ProjectileID.Sets.TrailCacheLength[this.Type] = 34;
+
+        base.SetStaticDefaults();
+    }
+
+    public override void ComboLogic(ref int combo)
+    {
+        if (combo > 2)
+        {
+            (startRotation, endRotation) = (StartRotation, EndRotation);
+            endRotation = startRotation + (MathF.PI * 2);
+            combo = 0;
+        }
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        // Trails.DrawTrail(Projectile.oldPos, Projectile.oldRot, Projectile.Size, Trails.BasicColorLerp(Color.GhostWhite * (Projectile.timeLeft / (float)Lifetime), Color.Transparent), Trails.BasicWidthLerp(1, 12), 2f, 0.5f, "LightDisc");
+        return true;
     }
 }

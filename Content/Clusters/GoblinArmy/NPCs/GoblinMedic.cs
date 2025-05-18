@@ -108,10 +108,10 @@ public class GoblinMedic : ComplexNPC
         }
     }
 
-    public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-    {
-        Lines.Line(GoHere, NPC.Center, Color.Red, 2);
-    }
+    // public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+    // {
+    //     Lines.Line(GoHere, NPC.Center, Color.Red, 2);
+    // }
 
     private void LookForDeaduns()
     {

@@ -1,5 +1,4 @@
 using HarmonyMod.Content.Clusters.Forest;
-using HarmonyMod.Content.Clusters.MidnightSwamp;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;

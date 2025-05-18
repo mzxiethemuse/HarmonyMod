@@ -27,7 +27,8 @@ public class Assets : ModSystem
         "Basic",
         "GuardShader",
         "ForestGradient",
-        "Outline"
+        "Outline",
+        "BasicTrail"
     };
     
     //    public static readonly Asset<Texture2D> name = ModContent.Request<Texture2D>(AssetDirectory.Glow + "file" );

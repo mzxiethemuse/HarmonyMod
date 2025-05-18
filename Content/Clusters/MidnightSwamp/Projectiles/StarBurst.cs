@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -47,7 +49,9 @@ public class StarBurst : ModProjectile
             rotations[i] = Projectile.velocity.ToRotation();
             
         }
-        Trails.DrawTrail(Projectile.oldPos, rotations, Color.DeepSkyBlue, Projectile.Size, 1, 22, -3f, 1.4f, "MagicMissile");
+        MiscShaderData miscShaderData = GameShaders.Misc["HarmonyMod:BasicTrail"];
+        miscShaderData.UseImage0(TextureAssets.Logo);
+        Trails.DrawTrail(Projectile.oldPos, Projectile.oldRot, Projectile.Size, Trails.BasicColorLerp(Color.Blue, Color.Transparent), Trails.BasicWidthLerp(1, 10), miscShaderData);
         return base.PreDraw(ref lightColor);
     }
 

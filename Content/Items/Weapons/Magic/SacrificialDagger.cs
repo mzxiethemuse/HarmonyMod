@@ -250,10 +250,10 @@ public static class ExciseActions {
     public static NPC.HitModifiers IchorExcision(NPC npc, NPC.HitModifiers hit)
     {
         DustEmitter.Emit(DustID.Ichor, npc.position, npc.width, npc.height, 15, new Vector2(5f, 7f), default, default, 0.5f, 2f, null, true);
-        if (npc.ModNPC is ComplexNPC complexNpc)
-        {
-            complexNpc.OnParried();
-        }
+        // if (npc.ModNPC is ComplexNPC complexNpc)
+        // {
+        //     complexNpc.OnParried();
+        // }
         Burst.SpawnBurst(npc.Center, Color.LightGoldenrodYellow, new BurstData(Assets.VFXCircle, 44, 186));
         SoundEngine.PlaySound(SoundID.Research);
 
