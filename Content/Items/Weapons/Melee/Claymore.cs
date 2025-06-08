@@ -1,9 +1,8 @@
 using System;
-using HarmonyMod.Asset;
 using HarmonyMod.Content.Clusters.GoblinArmy;
 using HarmonyMod.Content.Clusters.GoblinArmy.Weapons;
-using HarmonyMod.Content.Dust;
-using HarmonyMod.Content.Dust.BurstDatas;
+using HarmonyMod.Content.Dusts;
+using HarmonyMod.Content.Dusts.BurstDatas;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
@@ -122,7 +121,7 @@ public class ClaymoreSwing : SwordSwing
         for (int i = 0; i < Main.rand.Next(1,4); i++)
         {
             Burst.SpawnBurst(Main.rand.NextVector2FromRectangle(target.Hitbox), Color.WhiteSmoke * 0.5f,
-                new InBurst(Assets.VFXStar[3], 16, 18));
+                new InBurst(Assets.Assets.VFXStar[3], 16, 18));
         }
         base.OnHitNPC(target, hit, damageDone);
     }

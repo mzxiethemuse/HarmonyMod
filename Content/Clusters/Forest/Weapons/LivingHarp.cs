@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
-using HarmonyMod.Asset;
+using HarmonyMod.Assets;
 using HarmonyMod.Content.Clusters.Forest.Projectiles;
-using HarmonyMod.Content.Dust;
-using HarmonyMod.Content.Dust.BurstDatas;
+using HarmonyMod.Content.Dusts;
 using HarmonyMod.Content.Projectiles;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
@@ -113,7 +112,7 @@ public class LifeString : ModProjectile
                             Hitbox.SpawnHitbox(Projectile.GetSource_Misc("I peed My Pants"), Projectile.Center, 50, 50,
                                 Projectile.damage, 20, -1, true);
                             Burst.SpawnBurst(Vector2.Lerp(Projectile.Center,proj.Center,0.5f), Color.LimeGreen * 0.77f,
-                                new BurstData(Assets.VFXCircle, 40, 70));
+                                new BurstData(Assets.Assets.VFXCircle, 40, 70));
                         }
                         strumTime = 60f;
                         break;

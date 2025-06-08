@@ -1,8 +1,6 @@
 using System;
-using HarmonyMod.Asset;
-using HarmonyMod.Content.Dust;
-using HarmonyMod.Content.Dust.BurstDatas;
-using HarmonyMod.Content.Reworks.Ranger;
+using HarmonyMod.Content.Dusts;
+using HarmonyMod.Content.Dusts.BurstDatas;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -69,7 +67,7 @@ public class BayonetRifle : ModItem
 
         if (player.altFunctionUse == 2)
         {
-            Projectile.NewProjectileDirect(source, position, Vector2.Zero, ModContent.ProjectileType<BayonetRifleStab>(), 10, 5f, player.whoAmI);
+            Projectile.NewProjectileDirect(source, position, Vector2.Zero, ModContent.ProjectileType<BayonetRifleStab>(), 10, 7f, player.whoAmI);
             return false;
         }
         return true;
@@ -120,7 +118,7 @@ public class BayonetRifleStab : SwordSwing
         for (int i = 0; i < Main.rand.Next(1,4); i++)
         {
             Burst.SpawnBurst(Main.rand.NextVector2FromRectangle(target.Hitbox), Color.WhiteSmoke * 0.5f,
-                new InBurst(Assets.VFXStar[3], 16, 18));
+                new InBurst(Assets.Assets.VFXStar[3], 16, 18));
         }
         
         base.OnHitNPC(target, hit, damageDone);
@@ -135,7 +133,7 @@ public class BayonetRifleStab : SwordSwing
             if (Main.rand.NextBool(10))
             {
                 Burst.SpawnBurst(pos, Color.WhiteSmoke * 0.4f,
-                    new InBurst(Assets.VFXStar[3], 16, 28));
+                    new InBurst(Assets.Assets.VFXStar[3], 16, 28));
             }
         }
     }

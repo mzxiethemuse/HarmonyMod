@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using HarmonyMod.Asset;
+using HarmonyMod.Assets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

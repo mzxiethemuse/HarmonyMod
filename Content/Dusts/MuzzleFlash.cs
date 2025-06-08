@@ -1,14 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Terraria.ModLoader;
 // using ScaffoldLib.Glow;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.ModLoader;
 
-namespace HarmonyMod.Content.Dust
+namespace HarmonyMod.Content.Dusts
 {
     public class MuzzleFlash : ModDust
 

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 
-namespace HarmonyMod.Content.Dust.BurstDatas;
+namespace HarmonyMod.Content.Dusts.BurstDatas;
 
 public class FollowPlayerBurst : BurstData
 {

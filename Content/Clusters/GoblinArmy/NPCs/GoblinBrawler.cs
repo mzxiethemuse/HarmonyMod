@@ -1,10 +1,11 @@
 using System;
-using HarmonyMod.Asset;
-using HarmonyMod.Content.Dust;
+using HarmonyMod.Content.Dusts;
 using HarmonyMod.Content.Projectiles;
+using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
@@ -15,8 +16,27 @@ namespace HarmonyMod.Content.Clusters.GoblinArmy.NPCs;
 
 public class GoblinBrawler : ComplexNPC
 {
+    private enum AnimationStates
+    {
+        idle = 0,
+        jumping = 1,
+        walking = 2,
+    }
     
     
+    private AnimationPlayer _animationPlayer;
+    private static AnimationTemplate animationTemplate;
+    private static Asset<Texture2D> spritesheet =
+        ModContent.Request<Texture2D>("HarmonyMod/Content/Clusters/GoblinArmy/NPCs/NPC_28");
+
+    public override void Load()
+    {
+        animationTemplate = new();
+        animationTemplate.Add(new AnimationData(new Rectangle(0, 0 ,40, 54), 1, 1));
+        animationTemplate.Add(new AnimationData(new Rectangle(0, 54 ,40, 56), 1, 1));
+        animationTemplate.Add(new AnimationData(new Rectangle(0, 110,40, 56), 14, 5));
+    }
+
     enum AIStates {
         Walk = 0,
         Dash = 3,
@@ -29,9 +49,10 @@ public class GoblinBrawler : ComplexNPC
     {
         NPCID.Sets.BelongsToInvasionGoblinArmy[Type] = true;
     }
-
+// 40 x 54
     public override void SetDefaults()
     {
+        _animationPlayer = new AnimationPlayer(spritesheet, true).LoadFromTemplate(animationTemplate);
         NPC.width = 32;
         NPC.height = 46;
         
@@ -49,7 +70,6 @@ public class GoblinBrawler : ComplexNPC
 
     public override void AI()
     {
-        
         NPC.spriteDirection = NPC.direction;
         Timer++;
         AI2--;
@@ -144,12 +164,12 @@ public class GoblinBrawler : ComplexNPC
             if (NPC.collideY)
             {
                 SoundEngine.PlaySound(SoundID.DeerclopsRubbleAttack.WithPitchOffset(1.2f), NPC.Center);
-                Burst.SpawnBurst(Assets.VFXSmoke[3], NPC.Center, Color.DimGray * 0.4f, 100f, 30);
+                Burst.SpawnBurst(Assets.Assets.VFXSmoke[3], NPC.Center, Color.DimGray * 0.4f, 100f, 30);
 
                 Hitbox.SpawnHitbox(NPC.GetSource_FromAI(), NPC.Center, 90, 20, 25,20, NPC.whoAmI, false, true);
                 for (int i = -9; i < 9; i++)
                 {
-                    Burst.SpawnBurst(Assets.VFXSmoke[Main.rand.Next(0, 4)], NPC.Center + new Vector2(10 * i, Main.rand.Next(-20, 20)), Color.DarkGray * 0.4f, 20f + Main.rand.Next(-10, 11), 30);
+                    Burst.SpawnBurst(Assets.Assets.VFXSmoke[Main.rand.Next(0, 4)], NPC.Center + new Vector2(10 * i, Main.rand.Next(-20, 20)), Color.DarkGray * 0.4f, 20f + Main.rand.Next(-10, 11), 30);
 
                 }
 
@@ -163,12 +183,37 @@ public class GoblinBrawler : ComplexNPC
                 State = 2;
             }
         }
+
+        NPC.rotation = MathHelper.Lerp(NPC.rotation, (NPC.velocity.X / 50), 0.35f);
+        
+        
+        if (!NPC.collideY)
+        {
+            _animationPlayer.PlayAnimation((int)AnimationStates.jumping);
+        }
+        else if (MathF.Abs(NPC.velocity.X) > 0.01f)
+        {
+            _animationPlayer.PlayAnimation((int)AnimationStates.walking);
+        }
+        else
+        {
+            _animationPlayer.PlayAnimation((int)AnimationStates.idle);
+
+        }
+        
+
     }
 
     public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
     {
         modifiers.Knockback += 0.5f;
         base.ModifyHitPlayer(target, ref modifiers);
+    }
+
+    public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+    {
+        _animationPlayer.Draw(NPC.Center - screenPos + new Vector2(0, -NPC.gfxOffY), NPC.rotation, drawColor, Vector2.One, GraphicsUtils.DirectionToSpriteEffect(NPC.spriteDirection));
+        return false;
     }
 
     // public override bool OnParried()

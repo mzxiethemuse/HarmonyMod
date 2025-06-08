@@ -1,4 +1,4 @@
-# This file will automatically update with entries for new content after a build and reload.
+TooltipSnippets.ThrustingSword: Attacking after being hurt performs a riposte, dealing additional damage
 
 Items: {
 	debug: {
@@ -227,7 +227,6 @@ Items: {
 			'''
 			Hold to build up a bloody sneeze
 			Enemies hit by the sneeze become cursed
-			Cursed enemies burst into Leper Flesh when killed
 			'''
 	}
 
@@ -245,28 +244,19 @@ Items: {
 		Tooltip:
 			'''
 			Right click to use the bayonet to keep enemies at bay
+			{$TooltipSnippets.ThrustingSword}
 			'It's always faster to stab than to reload'
 			'''
 	}
 
 	BellOfWarning: {
 		DisplayName: Bell Of Warning
-		Tooltip:
-			'''
-			Fires a warning ring
-			The ring explodes at your cursor, detonating nearby Leper Flesh
-			Leper Flesh can be created by other weapons
-			'''
-	}
-
-	StarMudItem: {
-		DisplayName: Star Mud Item
-		Tooltip: ""
+		Tooltip: Fires a soundwave that explodes at your cursor
 	}
 
 	ExecutionerAxe: {
 		DisplayName: Executioner Axe
-		Tooltip: Critical hits and kills dismember enemies, spawning Leper Flesh
+		Tooltip: Critical hits and kills dismember enemies
 	}
 }
 
@@ -294,9 +284,8 @@ Projectiles: {
 	BayonetRifleStab.DisplayName: Bayonet Rifle Stab
 	LeperFlesh.DisplayName: Leper Flesh
 	ExecutionerAxeSwing.DisplayName: Executioner Axe Swing
+	WarningResonance.DisplayName: Warning Resonance
 }
-
-Keybinds.Parry.DisplayName: Parry
 
 NPCs: {
 	GoblinEngineer.DisplayName: Goblin Engineer

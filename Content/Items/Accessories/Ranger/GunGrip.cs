@@ -1,10 +1,10 @@
-﻿using HarmonyMod.Content.Reworks.Ranger;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HarmonyMod.Asset;
+using HarmonyMod.Assets;
+using HarmonyMod.Core.Reworks.Ranger;
 using Terraria;
 using Terraria.GameContent.UI;
 using Terraria.ID;

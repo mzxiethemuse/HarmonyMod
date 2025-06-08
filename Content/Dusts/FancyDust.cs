@@ -1,14 +1,11 @@
-using HarmonyMod.Asset;
+using HarmonyMod.Assets;
 using HarmonyMod.Core.Graphics;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using ReLogic.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-using Assets = HarmonyMod.Asset;
-namespace HarmonyMod.Content.Dust;
+namespace HarmonyMod.Content.Dusts;
 
 
 public abstract class FancyDust : ModDust
@@ -38,7 +35,7 @@ public abstract class FancyDust : ModDust
     public override bool PreDraw(Terraria.Dust dust)
     {
         var scaleFactor = (float)size / texture.Value.Width;
-        PixelationCanvas.AddAdditiveDrawAction(() =>
+        PixelationCanvas.AddPixelatedDrawAction(() =>
         {
             var color = dust.color with {A = (byte)(255 - dust.alpha)};
             // color.A *= 0;

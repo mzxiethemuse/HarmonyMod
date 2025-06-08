@@ -1,10 +1,9 @@
 using System;
 using System.Linq;
-using HarmonyMod.Asset;
 using HarmonyMod.Content.Clusters.BloodMoon.Items;
 using HarmonyMod.Content.Clusters.BloodMoon.Projectiles;
-using HarmonyMod.Content.Dust;
-using HarmonyMod.Content.Dust.BurstDatas;
+using HarmonyMod.Content.Dusts;
+using HarmonyMod.Content.Dusts.BurstDatas;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -68,6 +67,8 @@ public class SanguineNecromancer : ComplexNPC
                         case 1:
                             if (GetTarget().Distance(NPC.Center) < 400)
                             {
+                                SoundEngine.PlaySound(SoundID.Item81, NPC.position);
+
                                 //floorarm
                                 Timer = 0;
                                 State = 1;
@@ -78,7 +79,7 @@ public class SanguineNecromancer : ComplexNPC
                             // zomboes
                             if (GetTarget().Distance(NPC.Center) > 500 && GetTarget().Distance(NPC.Center) < 1200)
                             {
-                                Burst.SpawnBurst(Assets.VFXCircleBlurred, NPC.Center, Color.Red * 0.8f, 40f, 60);
+                                Burst.SpawnBurst(Assets.Assets.VFXCircleBlurred, NPC.Center, Color.Red * 0.8f, 40f, 60);
                                 Timer = 0;
                                 State = 2;
                                 foundAttack = true;
@@ -165,7 +166,7 @@ public class SanguineNecromancer : ComplexNPC
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath1.WithPitchOffset(1.5f), NPC.position);
 
-                Burst.SpawnBurst(NPC.Center, Color.DarkSalmon * 0.5f, new InBurst(Assets.VFXCircleBlurred, 90, 60));
+                Burst.SpawnBurst(NPC.Center, Color.Red * 0.5f, new MagicBurst(Assets.Assets.VFXCircleBlurred, 90, 60));
 
             };
             if (Timer == 90)

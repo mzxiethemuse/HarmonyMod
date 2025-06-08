@@ -1,5 +1,4 @@
-using HarmonyMod.Asset;
-using HarmonyMod.Content.Dust;
+using HarmonyMod.Content.Dusts;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 
@@ -9,6 +8,6 @@ public class HemoptysisDust : FancyDust
 {
     public override int alphaDecayRate => 20;
     public override float scaleDecayRate => 8f;
-    public override Asset<Texture2D> texture => Assets.VFXScorch[2];
+    public override Asset<Texture2D> texture => Assets.Assets.VFXScorch[2];
     public override int size => 16;
 }

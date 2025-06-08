@@ -1,13 +1,10 @@
-using HarmonyMod.Asset;
+using HarmonyMod.Assets;
 using HarmonyMod.Core.Graphics;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-using Assets = HarmonyMod.Asset;
-namespace HarmonyMod.Content.Dust;
+namespace HarmonyMod.Content.Dusts;
 
 
 public class FancySmoke : ModDust
@@ -33,7 +30,7 @@ public class FancySmoke : ModDust
     {
         var tex = Assets.Assets.VFXSmoke[((int?)dust.customData ?? 1) - 1];
         var scaleFactor = (float)size / tex.Value.Width;
-        PixelationCanvas.AddAdditiveDrawAction(() =>
+        PixelationCanvas.AddPixelatedDrawAction(() =>
         {
             var color = dust.color;
             // color.A *= 0;

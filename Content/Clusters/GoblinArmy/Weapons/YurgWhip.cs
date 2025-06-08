@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using HarmonyMod.Asset;
-using HarmonyMod.Content.Dust;
+using HarmonyMod.Content.Dusts;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -58,7 +57,7 @@ public class YurgWhip : ModItem
 
 public class YurgWhipProjectile : BaseWhipProjectile
 {
-    public static BurstData spikyballburst = new BurstData(Assets.VFXCircleBlurred, 30, 20);
+    public static BurstData spikyballburst = new BurstData(Assets.Assets.VFXCircleBlurred, 30, 20);
     public override string Texture => $"HarmonyMod/Content/Clusters/GoblinArmy/Weapons/YurgProjectile";
 
     public override bool PreAI()

@@ -1,13 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using Terraria;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
-using Terraria.ModLoader;
-
-namespace HarmonyMod.Asset;
+namespace HarmonyMod.Assets;
 
 public static class AssetDirectory
 {

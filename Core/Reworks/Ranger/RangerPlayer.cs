@@ -1,14 +1,12 @@
-﻿
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using HarmonyMod.Core.Util;
+using Microsoft.Xna.Framework.Input;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Color = Microsoft.Xna.Framework.Color;
 
-namespace HarmonyMod.Content.Reworks.Ranger
+namespace HarmonyMod.Core.Reworks.Ranger
 {
     public class RangerPlayer : ModPlayer
     {

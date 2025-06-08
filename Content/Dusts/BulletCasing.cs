@@ -1,14 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 
-namespace HarmonyMod.Content.Dust
+namespace HarmonyMod.Content.Dusts
 {
     public class BulletCasing : ModDust
 

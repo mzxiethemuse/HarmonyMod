@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 
-namespace HarmonyMod.Content.Dust;
+namespace HarmonyMod.Content.Dusts;
 
 //TODO: rework ts
 public class DustEmitter

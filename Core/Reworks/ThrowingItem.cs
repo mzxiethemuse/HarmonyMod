@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace HarmonyMod.Content.Reworks;
+namespace HarmonyMod.Core.Reworks;
 
 public class ThrowingItem : GlobalItem
 {
@@ -42,6 +42,7 @@ public class ThrowingItem : GlobalItem
         ItemID.Bone
     };
 
+    // hardcodiful AF
     public static readonly int[] throwingProjectiles =
     {
         ProjectileID.SnowBallFriendly,

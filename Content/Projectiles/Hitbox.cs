@@ -1,4 +1,4 @@
-using HarmonyMod.Asset;
+using HarmonyMod.Assets;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;

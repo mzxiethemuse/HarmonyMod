@@ -1,6 +1,6 @@
-using HarmonyMod.Asset;
-using HarmonyMod.Content.Dust;
-using HarmonyMod.Content.Dust.BurstDatas;
+using HarmonyMod.Assets;
+using HarmonyMod.Content.Dusts;
+using HarmonyMod.Content.Dusts.BurstDatas;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -28,7 +28,7 @@ public class Communion : ModItem
         if (player.HarmonyPlayer().TimeSinceLastHurt == (60 * 5))
         {
             SoundEngine.PlaySound(SoundID.Item111, player.Center);
-            Burst.SpawnBurst(player.Center, Color.Red * 0.4f, new FollowPlayerBurst(Assets.VFXScorch[2], 20, 60, player.whoAmI));
+            Burst.SpawnBurst(player.Center, Color.Red * 0.4f, new FollowPlayerBurst(Assets.Assets.VFXScorch[2], 20, 60, player.whoAmI));
             DustEmitter.Emit(DustID.LifeDrain, player.position, player.width, player.height, 20);
             player.Heal(60);
         }

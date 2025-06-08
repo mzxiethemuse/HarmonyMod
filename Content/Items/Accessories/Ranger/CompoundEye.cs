@@ -1,6 +1,6 @@
-﻿using HarmonyMod.Asset;
+﻿using HarmonyMod.Assets;
+using HarmonyMod.Core.Reworks.Ranger;
 using Microsoft.Xna.Framework;
-using HarmonyMod.Content.Reworks.Ranger;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

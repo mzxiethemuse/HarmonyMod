@@ -20,6 +20,14 @@
 	  <EmbeddedResource Remove="Content\Clusters\MidnightSwamp\**" />
 	  <AdditionalFiles Remove="Content\Clusters\MidnightSwamp\**" />
 	  <None Remove="Content\Clusters\MidnightSwamp\**" />
+	  <Compile Remove="Core\Reworks\Parry\**" />
+	  <EmbeddedResource Remove="Core\Reworks\Parry\**" />
+	  <AdditionalFiles Remove="Core\Reworks\Parry\**" />
+	  <None Remove="Core\Reworks\Parry\**" />
+	  <Compile Remove="Content\Items\Weapons\Magic\**" />
+	  <EmbeddedResource Remove="Content\Items\Weapons\Magic\**" />
+	  <AdditionalFiles Remove="Content\Items\Weapons\Magic\**" />
+	  <None Remove="Content\Items\Weapons\Magic\**" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Content\Dust\BulletCasing.png" />
@@ -39,6 +47,8 @@
 		<EffectFiles Include="**/*.hlsl" />
 		<EffectFiles Remove="Content\Reworks\Parry\**" />
 		<EffectFiles Remove="Content\Clusters\MidnightSwamp\**" />
+		<EffectFiles Remove="Core\Reworks\Parry\**" />
+		<EffectFiles Remove="Content\Items\Weapons\Magic\**" />
 
 	</ItemGroup>
 	<ItemGroup>

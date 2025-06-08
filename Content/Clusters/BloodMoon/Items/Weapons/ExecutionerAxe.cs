@@ -1,8 +1,7 @@
 using System;
-using HarmonyMod.Asset;
 using HarmonyMod.Content.Clusters.BloodMoon.Projectiles;
-using HarmonyMod.Content.Dust;
-using HarmonyMod.Content.Dust.BurstDatas;
+using HarmonyMod.Content.Dusts;
+using HarmonyMod.Content.Dusts.BurstDatas;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
@@ -106,13 +105,13 @@ public class ExecutionerAxeSwing : SwordSwing
 
         if (hit.Crit || target.life <= 0)
         {
-            for (int i = 0; i < Main.rand.Next(1,3); i++)
-            {
-                var proj = Projectile.NewProjectileDirect(target.GetSource_OnHurt(Projectile), target.Center, Vector2.Zero,
-                    ModContent.ProjectileType<LeperFlesh>(), 5, 3f);
-                proj.friendly = true;
-                
-            }
+            // for (int i = 0; i < Main.rand.Next(1,3); i++)
+            // {
+            //     var proj = Projectile.NewProjectileDirect(target.GetSource_OnHurt(Projectile), target.Center, Vector2.Zero,
+            //         ModContent.ProjectileType<LeperFlesh>(), 5, 3f);
+            //     proj.friendly = true;
+            //     
+            // }
             
             for (int i = 0; i < 6; i++)
             {
@@ -131,21 +130,21 @@ public class ExecutionerAxeSwing : SwordSwing
             }
             
             
-            Burst.SpawnBurst(target.Center, Color.DarkRed * 0.8f, new InBurst(Assets.VFXCircle, 60, 60f));
+            Burst.SpawnBurst(target.Center, Color.DarkRed * 0.8f, new InBurst(Assets.Assets.VFXCircle, 60, 60f));
             
         }
         base.OnHitNPC(target, hit, damageDone);
     }
     
-    // public override void ComboLogic(ref int combo)
-    // {
-    //     if (combo > 2)
-    //     {
-    //         Projectile.damage += 5;
-    //         (startRotation, endRotation) = (startRotation - MathHelper.PiOver4, endRotation + MathHelper.PiOver4);
-    //         combo = 0;
-    //     }
-    // }
+    public override void ComboLogic(ref int combo)
+    {
+        if (combo > 2)
+        {
+            Projectile.damage += 5;
+            (startRotation, endRotation) = (startRotation - MathHelper.PiOver4, endRotation + MathHelper.PiOver4);
+            combo = 0;
+        }
+    }
     
     
 }

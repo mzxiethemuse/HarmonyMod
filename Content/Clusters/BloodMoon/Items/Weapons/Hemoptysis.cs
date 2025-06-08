@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using HarmonyMod.Asset;
-using HarmonyMod.Content.Dust;
+using HarmonyMod.Assets;
+using HarmonyMod.Content.Dusts;
 using HarmonyMod.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -31,6 +31,7 @@ public class Hemoptysis : ModItem
         Item.shoot = ModContent.ProjectileType<HemoptysisSneeze>();
         Item.shootSpeed = 0.1f;
         Item.useStyle = ItemUseStyleID.HiddenAnimation;
+        
         base.SetDefaults();
     }
 
@@ -51,15 +52,23 @@ public class Hemoptysis : ModItem
 
 public class HemoptysisSneeze : ModProjectile
 {
-    private AnimationHandler _animationHandler;
+    private static AnimationTemplate sneezeanimation;
+    private AnimationPlayer _animationPlayer;
 
     private static Asset<Texture2D> burstsheet =
         ModContent.Request<Texture2D>("HarmonyMod/Content/Clusters/BloodMoon/Items/Weapons/HemoptysisBurst");
     public override string Texture => AssetDirectory.Placeholders + "GenericItem";
 
+    public override void Load()
+    {
+        sneezeanimation = new();
+        sneezeanimation.Add(new AnimationData(new Rectangle(0, 0, 30, 30), 6, 2));
+    }
+
     public override void SetDefaults()
     {
-        _animationHandler = new AnimationHandler(burstsheet).AddAnimation(new Rectangle(0, 0, 30, 30), 6, 2);
+        _animationPlayer = new AnimationPlayer(burstsheet).LoadFromTemplate(sneezeanimation);
+        
         Projectile.hide = true;
         Projectile.Size = new Vector2(60, 60);
         Projectile.timeLeft = 200;
@@ -71,8 +80,9 @@ public class HemoptysisSneeze : ModProjectile
 
     public override void AI()
     {
+        Main.NewText(Projectile.ai[0]);
         Projectile.friendly = false;
-            Player owner = Main.player[Projectile.owner];
+        Player owner = Main.player[Projectile.owner];
 
         Projectile.rotation = Projectile.velocity.ToRotation();
         if (Main.myPlayer == Projectile.owner)
@@ -80,7 +90,7 @@ public class HemoptysisSneeze : ModProjectile
             Projectile.rotation = owner.Center.DirectionTo(Main.MouseWorld).ToRotation();
         }
         Projectile.Center = owner.Center + new Vector2(Projectile.Size.X / 2 , 0).RotatedBy(Projectile.rotation) + new Vector2(0, -12f);
-        if (owner.channel)
+        if (owner.channel || Projectile.ai[0] == 0)
         {
             if (Main.rand.NextBool(1 + (int)(60 - Projectile.ai[0]) / 4))
             {
@@ -91,13 +101,13 @@ public class HemoptysisSneeze : ModProjectile
             Projectile.ai[0]++;
             if (Projectile.ai[0] == 60 - 12)
             {
-                owner.velocity.Y = 2.5f;
-                _animationHandler.PlayAnimation(0);
+                // owner.velocity.Y = -4.5f;
+                _animationPlayer.PlayAnimation(0);
             }
             
             if (Projectile.ai[0] == 55)
             {
-                SoundEngine.PlaySound(Assets.BloodSneeze.WithPitchOffset(0.7f), Projectile.Center);
+                SoundEngine.PlaySound(Assets.Assets.BloodSneeze.WithPitchOffset(0.7f), Projectile.Center);
                 
 
                 DustEmitter.Emit(DustID.Blood, Projectile.position, Projectile.width, Projectile.height, 15).ForEach((
@@ -145,9 +155,9 @@ public class HemoptysisSneeze : ModProjectile
     {
         if (Projectile.ai[0] > 60 - 10)
         {
-            PixelationCanvas.AddAdditiveDrawAction(() =>
+            PixelationCanvas.AddPixelatedDrawAction(() =>
             {
-                _animationHandler.Draw((Projectile.Center - Main.screenPosition) / 2, Projectile.rotation, Color.Red * 0.7f, Vector2.One);
+                _animationPlayer.Draw((Projectile.Center - Main.screenPosition) / 2, Projectile.rotation, Color.Red * 0.7f, Vector2.One);
             });
         }
         return false;

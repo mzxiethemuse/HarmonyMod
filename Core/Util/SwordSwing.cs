@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HarmonyMod.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -213,7 +214,7 @@ public abstract class SwordSwing : ModProjectile
         return ((new Vector2(Width / 2, Height / -2) + HoldOffset) * new Vector2(owner.direction, 1)).RotatedBy(MathHelper.Lerp(startRotation * Projectile.direction, endRotation * Projectile.direction, progress));
     }
 
-    float defaultLerpValue(float a) => Easing.OutQuint(a);
+    float defaultLerpValue(float n) => Easing.OutQuint(n);
 }
 
 public class SwingPlayer : ModPlayer
@@ -230,6 +231,31 @@ public class SwingPlayer : ModPlayer
             swing = 0;
         }
         oldHeldItemID = Player.HeldItem.type;
-        base.UpdateEquips();
     }
+}
+
+public class SwordSwingItem : GlobalItem
+{
+
+    public override bool? UseItem(Item item, Player player)
+    {
+        if (item.shoot != 0)
+        {
+            var tempProj = Projectile.NewProjectileDirect(player.GetSource_Misc("riposte"), Vector2.Zero, Vector2.Zero,
+                item.shoot, 0, 0);
+            if (tempProj.ModProjectile is SwordSwing swing)
+            {
+                if (swing.SwingType == SwordSwingType.Thrusting && player.HarmonyPlayer().TimeSinceLastHurt < 10)
+                {
+                    player.AddBuff(BuffID.ParryDamageBuff, 12);
+                    SoundEngine.PlaySound(SoundID.Item10, player.Center);
+                }
+            }
+
+            tempProj.Kill();
+        }
+
+        return null;
+    }
+
 }

@@ -66,7 +66,7 @@ public static class Trails
     
     public static void DrawTrailPixelated(Vector2[] positions, float[] rotations, Vector2 size, VertexStrip.StripColorFunction color, VertexStrip.StripHalfWidthFunction width, float saturation, float opacity, string shader)
     {
-        PixelationCanvas.AddAdditiveDrawAction(() =>
+        PixelationCanvas.AddPixelatedDrawAction(() =>
         {
             GraphicsDevice graphicsDevice = Main.graphics.GraphicsDevice;
             RasterizerState save = graphicsDevice.RasterizerState;

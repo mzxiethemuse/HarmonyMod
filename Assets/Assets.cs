@@ -5,7 +5,7 @@ using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 
-namespace HarmonyMod.Asset;
+namespace HarmonyMod.Assets;
 
 public class Assets : ModSystem
 {
@@ -39,6 +39,7 @@ public class Assets : ModSystem
 
     
     public static readonly Asset<Texture2D> VFXCircle = ModContent.Request<Texture2D>(AssetDirectory.Glow + "Explosion" );
+    public static readonly Asset<Texture2D> VFXCircle2 = ModContent.Request<Texture2D>(AssetDirectory.Glow + "Explosion2" );
     public static readonly Asset<Texture2D> VFXCircleBlurred = ModContent.Request<Texture2D>(AssetDirectory.Glow + "ExplosionBlurred" );
     public static readonly Asset<Texture2D>[] VFXSmoke = FillTextureListArrayThing(AssetDirectory.Glow + "smoke", 10);
     public static readonly Asset<Texture2D>[] VFXStar = FillTextureListArrayThing(AssetDirectory.Glow + "star", 9);

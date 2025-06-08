@@ -1,5 +1,4 @@
-using HarmonyMod.Asset;
-using HarmonyMod.Content.Dust;
+using HarmonyMod.Content.Dusts;
 using HarmonyMod.Content.Items.Weapons.Throwing;
 using HarmonyMod.Content.Projectiles;
 using HarmonyMod.Core.Graphics;
@@ -96,7 +95,7 @@ public class CrudlockProjectile : ModProjectile
 
                 }
             }
-            Burst.SpawnBurst(Assets.VFXCircle, Projectile.Center, Color.BlueViolet * 0.7f, 50f, 38);
+            Burst.SpawnBurst(Assets.Assets.VFXCircle, Projectile.Center, Color.BlueViolet * 0.7f, 50f, 38);
             Projectile.CritChance += 5;
         }
     }

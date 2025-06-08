@@ -1,9 +1,8 @@
-using System;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 
-namespace HarmonyMod.Content.Dust.BurstDatas;
+namespace HarmonyMod.Content.Dusts.BurstDatas;
 
 public class InBurst : BurstData
 {

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace HarmonyMod.Content.Reworks.Ranger;
+namespace HarmonyMod.Core.Reworks.Ranger;
 
 class FuckYourChlorophyteBullets : GlobalProjectile
 {

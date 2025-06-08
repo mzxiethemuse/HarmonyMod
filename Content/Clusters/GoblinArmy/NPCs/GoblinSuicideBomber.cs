@@ -1,5 +1,4 @@
-using HarmonyMod.Asset;
-using HarmonyMod.Content.Dust;
+using HarmonyMod.Content.Dusts;
 using HarmonyMod.Content.Projectiles;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
@@ -74,7 +73,7 @@ public class GoblinSuicideBomber : ComplexNPC
 
                 SoundEngine.PlaySound(SoundID.Item62);
                 SoundEngine.PlaySound(SoundID.Item14);
-                Burst.SpawnBurst(Assets.VFXCircle, NPC.Center, Color.Red, 100f, 50);
+                Burst.SpawnBurst(Assets.Assets.VFXCircle, NPC.Center, Color.Red, 100f, 50);
                 Hitbox.SpawnHitbox(NPC.GetSource_FromAI(), NPC.Center, 50, 50, 50,22, NPC.whoAmI, false, true);
 
                 // Explosion.SpawnExplosion<Explosion>(NPC.GetSource_FromAI(), NPC.Center, 50, 3f, Main.myPlayer, 100f, 50, Color.OrangeRed, 30, false, 0.45f);

@@ -1,5 +1,4 @@
-using HarmonyMod.Asset;
-using HarmonyMod.Content.Dust;
+using HarmonyMod.Content.Dusts;
 using HarmonyMod.Content.Projectiles;
 using HarmonyMod.Core.Graphics;
 using Microsoft.Xna.Framework;
@@ -126,7 +125,7 @@ public class ShadowflameBolt : ModProjectile
     {
         burst.Emit(Projectile.position, 16, 16, 32);
         SoundEngine.PlaySound(SoundID.Item110, Projectile.position);
-        Burst.SpawnBurst(Assets.VFXStar[2], Projectile.Center, Color.BlueViolet, 36f, 44);
+        Burst.SpawnBurst(Assets.Assets.VFXStar[2], Projectile.Center, Color.BlueViolet, 36f, 44);
         // Explosion.SpawnExplosion<MagicExplosion>(Projectile.Center, 0, 0f, Projectile.owner, 36f, 44, Color.BlueViolet, 30);
     }
     

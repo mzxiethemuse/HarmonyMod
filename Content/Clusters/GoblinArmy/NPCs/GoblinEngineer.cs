@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HarmonyMod.Content.Dust;
+using HarmonyMod.Content.Dusts;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;

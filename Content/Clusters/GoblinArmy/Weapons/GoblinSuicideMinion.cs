@@ -1,8 +1,8 @@
 using System;
 using System.Numerics;
-using HarmonyMod.Asset;
+using HarmonyMod.Assets;
 using HarmonyMod.Content.Clusters.GoblinArmy.NPCs;
-using HarmonyMod.Content.Dust;
+using HarmonyMod.Content.Dusts;
 using HarmonyMod.Content.Projectiles;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
@@ -165,14 +165,14 @@ public class GoblinSuicideMinion : Minion
                 dust.customData = Main.rand.Next(1, 6);
             }
 
-            Burst.SpawnBurst(Assets.VFXCircle, Projectile.Center, Color.Red, 60, 50);
+            Burst.SpawnBurst(Assets.Assets.VFXCircle, Projectile.Center, Color.Red, 60, 50);
             CameraUtils.AddScreenshakeModifier(Projectile.Center, Vector2.UnitY, 3f, 2, 40);
             SoundEngine.PlaySound(SoundID.NPCDeath1);
             DustEmitter.Emit(DustID.Blood, Projectile.position, Projectile.width, Projectile.height, 32, Vector2.Zero,
                 default, default, 2f, 3f);
             SoundEngine.PlaySound(SoundID.Item62);
             SoundEngine.PlaySound(SoundID.Item14);
-            Burst.SpawnBurst(Assets.VFXSmoke[3], Projectile.Center, Color.OrangeRed * 0.4f, 30, 50);
+            Burst.SpawnBurst(Assets.Assets.VFXSmoke[3], Projectile.Center, Color.OrangeRed * 0.4f, 30, 50);
             Hitbox.SpawnHitbox(Projectile.GetSource_OnHit(target), Projectile.Center, 80, 80, 40, 5, Projectile.owner,
                 true);
             Projectile.velocity += Main.rand.NextVector2CircularEdge(10f, 10f);

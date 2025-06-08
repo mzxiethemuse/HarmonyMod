@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using HarmonyMod.Asset;
-using HarmonyMod.Content.Dust;
+using HarmonyMod.Content.Dusts;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
@@ -57,7 +56,7 @@ public class FloorArm : ModProjectile
                 {
                     SoundEngine.PlaySound(SoundID.WormDig.WithPitchOffset(0.5f), Projectile.position);
                 }
-                Burst.SpawnBurst(Assets.VFXCircleBlurred, Projectile.Center, Color.Red * 0.2f, 20, 20);
+                Burst.SpawnBurst(Assets.Assets.VFXCircleBlurred, Projectile.Center, Color.Red * 0.2f, 20, 20);
                 DustEmitter.Emit(ModContent.DustType<FancySmoke>(), Projectile.Center, 1, 1, 8,
                     new Vector2(0.1f, 0.5f), Color.DarkKhaki * 0.2f, Color.SaddleBrown * 0.5f);
             }

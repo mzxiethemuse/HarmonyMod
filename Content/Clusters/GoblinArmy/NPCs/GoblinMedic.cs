@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HarmonyMod.Asset;
-using HarmonyMod.Content.Dust;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
@@ -146,12 +144,12 @@ public class DeadGoblinSystem : ModSystem
                     removeMe.Add(goblin);
                 }
 
-                PixelationCanvas.AddAdditiveDrawAction((() =>
+                PixelationCanvas.AddPixelatedDrawAction((() =>
                 {
-                    Main.spriteBatch.Draw(Assets.PlaceholderCube.Value,
+                    Main.spriteBatch.Draw(Assets.Assets.PlaceholderCube.Value,
                         (goblin.position - Main.screenPosition) / 2 +
                         new Vector2(0, (float)Math.Sin(Main.timeForVisualEffects / 8)), null, Color.White * 0.5f, 0f,
-                        Assets.PlaceholderCube.Size() / 2, 0.3f, SpriteEffects.None, 0f);
+                        Assets.Assets.PlaceholderCube.Size() / 2, 0.3f, SpriteEffects.None, 0f);
                 }));
             }
 

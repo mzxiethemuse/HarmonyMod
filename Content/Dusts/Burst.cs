@@ -1,5 +1,4 @@
-using System;
-using HarmonyMod.Asset;
+using HarmonyMod.Assets;
 using HarmonyMod.Core.Graphics;
 using HarmonyMod.Core.Util;
 using Microsoft.Xna.Framework;
@@ -9,7 +8,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace HarmonyMod.Content.Dust;
+namespace HarmonyMod.Content.Dusts;
 
 public class Burst : ModDust
 {
@@ -52,32 +51,52 @@ public class Burst : ModDust
             // // 43
             // Main.spriteBatch.End();
             var color2 = dust.color;
-            PixelationCanvas.AddAdditiveDrawAction(() =>
+            if (burstData.additive)
             {
-                var FUCK = (dust.position - Main.screenPosition) / 2;
-                // Lines.Rectangle(new Rectangle(Main.mouseX / 2, Main.mouseY / 2, 100, 100), Color.Red);
-                Main.spriteBatch.Draw(texture.Value, (dust.position - Main.screenPosition) / 2, null, dust.color * alpha,
-                    dust.rotation,
-                    texture.Size() / 2, scaleFactor,
-                    SpriteEffects.None, 0f);
-                // Main.spriteBatch.Draw(texture.Value, (dust.position - Main.screenPosition) / 2, null, dust.color,
-                //                     dust.rotation,
-                //                     texture.Size() / 2, scaleFactor,
-                //                     SpriteEffects.None, 0f);
-            });
+                PixelationCanvas.AddAdditiveDrawAction(() =>
+                {
+                    var FUCK = (dust.position - Main.screenPosition) / 2;
+                    // Lines.Rectangle(new Rectangle(Main.mouseX / 2, Main.mouseY / 2, 100, 100), Color.Red);
+                    Main.spriteBatch.Draw(texture.Value, (dust.position - Main.screenPosition) / 2, null,
+                        dust.color * alpha,
+                        dust.rotation,
+                        texture.Size() / 2, scaleFactor,
+                        SpriteEffects.None, 0f);
+                    // Main.spriteBatch.Draw(texture.Value, (dust.position - Main.screenPosition) / 2, null, dust.color,
+                    //                     dust.rotation,
+                    //                     texture.Size() / 2, scaleFactor,
+                    //                     SpriteEffects.None, 0f);
+                });
+            } else
+            {
+                PixelationCanvas.AddPixelatedDrawAction(() =>
+                {
+                    var FUCK = (dust.position - Main.screenPosition) / 2;
+                    // Lines.Rectangle(new Rectangle(Main.mouseX / 2, Main.mouseY / 2, 100, 100), Color.Red);
+                    Main.spriteBatch.Draw(texture.Value, (dust.position - Main.screenPosition) / 2, null,
+                        dust.color * alpha,
+                        dust.rotation,
+                        texture.Size() / 2, scaleFactor,
+                        SpriteEffects.None, 0f);
+                    // Main.spriteBatch.Draw(texture.Value, (dust.position - Main.screenPosition) / 2, null, dust.color,
+                    //                     dust.rotation,
+                    //                     texture.Size() / 2, scaleFactor,
+                    //                     SpriteEffects.None, 0f);
+                });
+            }
             
         }
         return false;
     }
     
 
-    public static void SpawnBurst(Asset<Texture2D> texture, Vector2 position, Color color, float radius, int duration)
+    public static void SpawnBurst(Asset<Texture2D> texture, Vector2 position, Color color, float radius, int duration, bool additive = false)
     {
         
         var peepee = Terraria.Dust.NewDustPerfect(position, ModContent.DustType<Burst>(), null, 0, color with {A = 0}, 1f);
         // DEBUG
         if (_debug) Terraria.Dust.NewDustPerfect(position, DustID.TintableDust, null, 0, color with {A = 0}, 5f);
-        peepee.customData = new BurstData(texture, duration, radius);
+        peepee.customData = new BurstData(texture, duration, radius, additive);
     }
     
     public static void SpawnBurst(Vector2 position, Color color, BurstData data)
@@ -95,6 +114,7 @@ public class BurstData
     public float time;
     public float radius;
     public float duration;
+    public bool additive = false;
     
     public BurstData(Asset<Texture2D> texture, float duration, float radius)
     {
@@ -103,6 +123,15 @@ public class BurstData
         this.radius = radius;
         this.texture = texture;
         
+    }
+    
+    public BurstData(Asset<Texture2D> texture, float duration, float radius, bool additive)
+    {
+        time = 0;
+        this.duration = duration;
+        this.radius = radius;
+        this.texture = texture;
+        this.additive = additive;
     }
     
     public virtual float ScaleLerpMod(float n)

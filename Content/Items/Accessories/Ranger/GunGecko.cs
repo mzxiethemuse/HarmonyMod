@@ -1,4 +1,4 @@
-using HarmonyMod.Asset;
+using HarmonyMod.Assets;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

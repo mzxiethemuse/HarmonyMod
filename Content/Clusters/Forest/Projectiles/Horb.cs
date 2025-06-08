@@ -1,4 +1,4 @@
-using HarmonyMod.Asset;
+using HarmonyMod.Assets;
 using HarmonyMod.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria;
